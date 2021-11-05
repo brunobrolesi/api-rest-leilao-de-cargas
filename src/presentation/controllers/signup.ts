@@ -1,4 +1,4 @@
-import { HttpRequest } from '../protocols/http'
+import { HttpRequest, HttpResponse } from '../protocols/http'
 import { SignUpBodyValidator } from '../protocols/signup-body-validator'
 
 export class SignUpController {
@@ -8,8 +8,9 @@ export class SignUpController {
     this.signUpBodyValidator = signUpBodyValidator
   }
 
-  handle (httpRequest: HttpRequest): any {
-    const { body } = httpRequest
-    this.signUpBodyValidator.isValid(body)
+  handle (httpRequest: HttpRequest): HttpResponse {
+    const { body: requestBody } = httpRequest
+    const { error } = this.signUpBodyValidator.isValid(requestBody)
+    if (error) return { statusCode: 400, body: {} }
   }
 }
