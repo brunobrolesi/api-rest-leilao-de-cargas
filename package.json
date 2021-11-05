@@ -1,0 +1,23 @@
+{
+  "name": "teste-back-goflux",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunobrolesi/teste-back-goflux.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brunobrolesi/teste-back-goflux/issues"
+  },
+  "homepage": "https://github.com/brunobrolesi/teste-back-goflux#readme",
+  "devDependencies": {
+    "git-commit-msg-linter": "^3.2.8"
+  }
+}
