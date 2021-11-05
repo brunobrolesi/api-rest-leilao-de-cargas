@@ -11,6 +11,6 @@ export class SignUpController {
   handle (httpRequest: HttpRequest): HttpResponse {
     const { body: requestBody } = httpRequest
     const { error } = this.signUpBodyValidator.isValid(requestBody)
-    if (error) return { statusCode: 400, body: {} }
+    if (error) return { statusCode: 400, body: { message: error.message } }
   }
 }
