@@ -13,6 +13,16 @@ const makeEncrypter = (): Encrypter => {
   return new EncrypterStub()
 }
 
+const makeFakeAccountData = (): AddAccountModel => ({
+  email: 'any_email',
+  password: 'any_password',
+  name: 'any_name',
+  doc: 'any_doc',
+  about: 'any_about',
+  site: 'any_site',
+  role: 'any_role'
+})
+
 const makeAddAccountRepository = (): AddAccountRepository => {
   class AddAccountRepositoryStub implements AddAccountRepository {
     async add (accountData: AddAccountModel): Promise<AccountModel> {
@@ -54,15 +64,7 @@ describe('DbAddAccount', () => {
   it('Should call Encrypter with correct password', async () => {
     const { sut, encrypterStub } = makeSut()
     const encryptSpy = jest.spyOn(encrypterStub, 'encrypt')
-    const accountData = {
-      email: 'any_email',
-      password: 'any_password',
-      name: 'any_name',
-      doc: 'any_doc',
-      about: 'any_about',
-      site: 'any_site',
-      role: 'any_role'
-    }
+    const accountData = makeFakeAccountData()
     await sut.add(accountData)
     expect(encryptSpy).toHaveBeenCalledWith('any_password')
   })
@@ -70,15 +72,7 @@ describe('DbAddAccount', () => {
   it('Should throw if Encrypter throws', async () => {
     const { sut, encrypterStub } = makeSut()
     jest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-    const accountData = {
-      email: 'any_email',
-      password: 'any_password',
-      name: 'any_name',
-      doc: 'any_doc',
-      about: 'any_about',
-      site: 'any_site',
-      role: 'any_role'
-    }
+    const accountData = makeFakeAccountData()
     const promise = sut.add(accountData)
     await expect(promise).rejects.toThrow()
   })
@@ -86,15 +80,7 @@ describe('DbAddAccount', () => {
   it('Should throw if AddAccountRepository throws', async () => {
     const { sut, addAccountRepositoryStub } = makeSut()
     jest.spyOn(addAccountRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
-    const accountData = {
-      email: 'any_email',
-      password: 'any_password',
-      name: 'any_name',
-      doc: 'any_doc',
-      about: 'any_about',
-      site: 'any_site',
-      role: 'any_role'
-    }
+    const accountData = makeFakeAccountData()
     const promise = sut.add(accountData)
     await expect(promise).rejects.toThrow()
   })
