@@ -46,4 +46,19 @@ describe('Signup Controller', () => {
       site: 'any_site'
     })
   })
+
+  it('Should return 400 if validator returns an error', () => {
+    const { sut, signUpBodyValidatorStub } = makeSut()
+    jest.spyOn(signUpBodyValidatorStub, 'isValid').mockReturnValueOnce({ error: new Error('any_message') })
+    const httpRequest = {
+      body: {
+        doc: 'any_doc',
+        about: 'any_about',
+        active: true,
+        site: 'any_site'
+      }
+    }
+    const response = sut.handle(httpRequest)
+    expect(response.statusCode).toBe(400)
+  })
 })
