@@ -1,17 +1,30 @@
-import { badRequest } from '../helpers/http-helper'
+import { AddAccount } from '../../domain/usecases/add-account'
+import { badRequest, created, serverError } from '../helpers/http-helper'
 import { HttpRequest, HttpResponse } from '../protocols/http'
 import { SignUpBodyValidator } from '../protocols/signup-body-validator'
 
 export class SignUpController {
   private readonly signUpBodyValidator: SignUpBodyValidator
+  private readonly addAccount: AddAccount
 
-  constructor (signUpBodyValidator: SignUpBodyValidator) {
+  constructor (signUpBodyValidator: SignUpBodyValidator, addAccount: AddAccount) {
     this.signUpBodyValidator = signUpBodyValidator
+    this.addAccount = addAccount
   }
 
-  handle (httpRequest: HttpRequest): HttpResponse {
-    const { body: requestBody } = httpRequest
-    const { error } = this.signUpBodyValidator.isValid(requestBody)
-    if (error) return badRequest(error)
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+    try {
+      const { body } = httpRequest
+      const { error } = this.signUpBodyValidator.isValid(body)
+      if (error) return badRequest(error)
+
+      const { email, password, name, doc, about, site, role } = body
+
+      const account = await this.addAccount.add({ email, password, name, doc, about, site, role })
+
+      return created(account)
+    } catch (error) {
+      return serverError()
+    }
   }
 }
