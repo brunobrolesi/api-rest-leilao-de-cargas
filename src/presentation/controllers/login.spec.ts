@@ -1,4 +1,5 @@
 import { Authentication } from '../../domain/usecases/authentication'
+import { ServerError } from '../errors/server-error'
 import { BodyValidator } from '../protocols/body-validator'
 import { ValidatorResult } from '../protocols/validator-result'
 import { LoginController } from './login'
@@ -88,5 +89,14 @@ describe('Login Controller', () => {
     const httpRequest = makeFakeHttpRequest()
     const response = await sut.handle(httpRequest)
     expect(response.statusCode).toBe(401)
+  })
+
+  it('Should return 500 if authentication throws', async () => {
+    const { sut, authenticationStub } = makeSut()
+    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const httpRequest = makeFakeHttpRequest()
+    const response = await sut.handle(httpRequest)
+    expect(response.statusCode).toBe(500)
+    expect(response.body).toEqual(new ServerError())
   })
 })
