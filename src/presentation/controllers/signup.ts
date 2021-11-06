@@ -1,9 +1,10 @@
 import { AddAccount } from '../../domain/usecases/add-account'
 import { badRequest, created, serverError } from '../helpers/http-helper'
+import { Controller } from '../protocols/controller'
 import { HttpRequest, HttpResponse } from '../protocols/http'
 import { SignUpBodyValidator } from '../protocols/signup-body-validator'
 
-export class SignUpController {
+export class SignUpController implements Controller {
   private readonly signUpBodyValidator: SignUpBodyValidator
   private readonly addAccount: AddAccount
 
