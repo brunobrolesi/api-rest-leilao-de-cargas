@@ -1,5 +1,5 @@
 import { ValidatorResult } from './validator-result'
 
-export interface SignUpBodyValidator {
+export interface BodyValidator {
   isValid: (body: object) => ValidatorResult
 }

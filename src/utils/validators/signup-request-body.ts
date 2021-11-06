@@ -1,8 +1,8 @@
-import { SignUpBodyValidator } from '../../presentation/protocols/signup-body-validator'
+import { BodyValidator } from '../../presentation/protocols/body-validator'
 import { ValidatorResult } from '../../presentation/protocols/validator-result'
 import Joi from 'joi'
 
-export class SignUpValidator implements SignUpBodyValidator {
+export class SignUpValidator implements BodyValidator {
   isValid (body: object): ValidatorResult {
     const schema = Joi.object({
       email: Joi.string().email().required(),

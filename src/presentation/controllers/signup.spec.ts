@@ -1,12 +1,12 @@
 import { AccountModel } from '../../domain/models/account'
 import { AddAccount, AddAccountModel } from '../../domain/usecases/add-account'
 import { ServerError } from '../errors/server-error'
-import { SignUpBodyValidator } from '../protocols/signup-body-validator'
+import { BodyValidator } from '../protocols/body-validator'
 import { ValidatorResult } from '../protocols/validator-result'
 import { SignUpController } from './signup'
 
-const makeSignUpBodyValidatorStub = (): SignUpBodyValidator => {
-  class SignUpBodyValidatorStub implements SignUpBodyValidator {
+const makeSignUpBodyValidatorStub = (): BodyValidator => {
+  class SignUpBodyValidatorStub implements BodyValidator {
     isValid (body: object): ValidatorResult {
       return {}
     }
@@ -47,7 +47,7 @@ const makeFakeHttpRequest = (): any => ({
 
 interface SutTypes {
   sut: SignUpController
-  signUpBodyValidatorStub: SignUpBodyValidator
+  signUpBodyValidatorStub: BodyValidator
   addAccountStub: AddAccount
 }
 
