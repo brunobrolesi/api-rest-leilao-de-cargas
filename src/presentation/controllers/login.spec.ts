@@ -99,4 +99,12 @@ describe('Login Controller', () => {
     expect(response.statusCode).toBe(500)
     expect(response.body).toEqual(new ServerError())
   })
+
+  it('Should return 200 if valid credentials are provided', async () => {
+    const { sut } = makeSut()
+    const httpRequest = makeFakeHttpRequest()
+    const response = await sut.handle(httpRequest)
+    expect(response.statusCode).toBe(200)
+    expect(response.body).toEqual({ token: 'any_token' })
+  })
 })
