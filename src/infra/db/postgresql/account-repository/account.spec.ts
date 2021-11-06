@@ -1,9 +1,14 @@
 import { AccountPostgresRepository } from './account'
 import { prismaMock } from '../../../../../singleton'
+import { AddAccountRepository } from '../../../../data/protocols/db/add-account-repository'
+
+const makeSut = (): AddAccountRepository => {
+  return new AccountPostgresRepository(prismaMock)
+}
 
 describe('Account PostgreSQL Repository', () => {
   it('Should call prisma client with correct values when role is customer', async () => {
-    const sut = new AccountPostgresRepository(prismaMock)
+    const sut = makeSut()
     const spyCreate = jest.spyOn(prismaMock.customer, 'create')
     const fakeAccountData = {
       email: 'any_email',
@@ -29,7 +34,7 @@ describe('Account PostgreSQL Repository', () => {
   })
 
   it('Should call prisma client with correct values when role is provider', async () => {
-    const sut = new AccountPostgresRepository(prismaMock)
+    const sut = makeSut()
     const spyCreate = jest.spyOn(prismaMock.provider, 'create')
     const fakeAccountData = {
       email: 'any_email',
