@@ -6,4 +6,5 @@ export interface AccountModel {
   doc: string
   about: string
   site: string
+  active: boolean
 }

@@ -15,7 +15,8 @@ const makeLoadAccountByEmailRepositoryStub = (): LoadAccountByEmailRepository =>
         name: 'valid_name',
         doc: '60.429.484/0001-10',
         about: 'valid_about',
-        site: 'valid_site'
+        site: 'valid_site',
+        active: true
       }
       return await new Promise(resolve => resolve(account))
     }

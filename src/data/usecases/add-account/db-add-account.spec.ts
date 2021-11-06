@@ -33,7 +33,8 @@ const makeAddAccountRepository = (): AddAccountRepository => {
         name: 'any_name',
         doc: 'any_doc',
         about: 'any_about',
-        site: 'any_site'
+        site: 'any_site',
+        active: true
       }
       return await new Promise(resolve => resolve(fakeAccount))
     }
@@ -95,7 +96,8 @@ describe('DbAddAccount', () => {
       name: 'any_name',
       doc: 'any_doc',
       about: 'any_about',
-      site: 'any_site'
+      site: 'any_site',
+      active: true
     })
   })
 })

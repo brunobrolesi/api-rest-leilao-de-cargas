@@ -25,7 +25,8 @@ const makeAddAccountStub = (): AddAccount => {
         name: 'any_name',
         doc: 'any_doc',
         about: 'any_about',
-        site: 'any_site'
+        site: 'any_site',
+        active: true
       }))
     }
   }
@@ -132,7 +133,8 @@ describe('Signup Controller', () => {
       name: 'any_name',
       doc: 'any_doc',
       about: 'any_about',
-      site: 'any_site'
+      site: 'any_site',
+      active: true
     })
   })
 })
