@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "sucrase-node src/main/server.ts",
-    "test": "jest --passWithNoTests --runInBand",
+    "start": "dotenv -e .env sucrase-node src/main/server.ts",
+    "test": "npm run docker:up && npm run migrate:testdb && dotenv -e .env.test jest --passWithNoTests --runInBand && npm run docker:down",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js",
     "test:staged": "npm test -- --findRelatedTests",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "migrate:testdb": "dotenv -e .env.test -- npx prisma migrate dev --name postgres-init",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down"
   },
   "repository": {
     "type": "git",
@@ -29,6 +32,7 @@
     "@types/node": "^16.11.6",
     "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "dotenv-cli": "^4.1.0",
     "eslint": "^7.32.0",
     "eslint-config-standard-with-typescript": "^21.0.1",
     "eslint-plugin-import": "^2.25.2",
