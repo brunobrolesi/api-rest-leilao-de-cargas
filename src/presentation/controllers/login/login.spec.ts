@@ -1,7 +1,7 @@
-import { Authentication, AuthenticationModel } from '../../domain/usecases/authentication'
-import { ServerError } from '../errors/server-error'
-import { BodyValidator } from '../protocols/body-validator'
-import { ValidatorResult } from '../protocols/validator-result'
+import { Authentication, AuthenticationModel } from '../../../domain/usecases/authentication'
+import { ServerError } from '../../errors/server-error'
+import { BodyValidator } from '../../protocols/body-validator'
+import { ValidatorResult } from '../../protocols/validator-result'
 import { LoginController } from './login'
 
 const makeLoginBodyValidatorStub = (): BodyValidator => {

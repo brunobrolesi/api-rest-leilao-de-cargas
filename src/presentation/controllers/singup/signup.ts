@@ -1,8 +1,8 @@
-import { AddAccount } from '../../domain/usecases/add-account'
-import { badRequest, created, serverError } from '../helpers/http-helper'
-import { Controller } from '../protocols/controller'
-import { HttpRequest, HttpResponse } from '../protocols/http'
-import { BodyValidator } from '../protocols/body-validator'
+import { AddAccount } from '../../../domain/usecases/add-account'
+import { badRequest, created, serverError } from '../../helpers/http-helper'
+import { Controller } from '../../protocols/controller'
+import { HttpRequest, HttpResponse } from '../../protocols/http'
+import { BodyValidator } from '../../protocols/body-validator'
 
 export class SignUpController implements Controller {
   private readonly signUpBodyValidator: BodyValidator

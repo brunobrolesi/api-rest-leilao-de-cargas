@@ -1,8 +1,8 @@
-import { badRequest, ok, serverError, unauthorized } from '../helpers/http-helper'
-import { Controller } from '../protocols/controller'
-import { HttpRequest, HttpResponse } from '../protocols/http'
-import { BodyValidator } from '../protocols/body-validator'
-import { Authentication } from '../../domain/usecases/authentication'
+import { badRequest, ok, serverError, unauthorized } from '../../helpers/http-helper'
+import { Controller } from '../../protocols/controller'
+import { HttpRequest, HttpResponse } from '../../protocols/http'
+import { BodyValidator } from '../../protocols/body-validator'
+import { Authentication } from '../../../domain/usecases/authentication'
 
 export class LoginController implements Controller {
   private readonly loginBodyValidator: BodyValidator

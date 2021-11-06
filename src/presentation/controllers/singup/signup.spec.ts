@@ -1,8 +1,8 @@
-import { AccountModel } from '../../domain/models/account'
-import { AddAccount, AddAccountModel } from '../../domain/usecases/add-account'
-import { ServerError } from '../errors/server-error'
-import { BodyValidator } from '../protocols/body-validator'
-import { ValidatorResult } from '../protocols/validator-result'
+import { AccountModel } from '../../../domain/models/account'
+import { AddAccount, AddAccountModel } from '../../../domain/usecases/add-account'
+import { ServerError } from '../../errors/server-error'
+import { BodyValidator } from '../../protocols/body-validator'
+import { ValidatorResult } from '../../protocols/validator-result'
 import { SignUpController } from './signup'
 
 const makeSignUpBodyValidatorStub = (): BodyValidator => {
