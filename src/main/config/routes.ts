@@ -1,6 +1,6 @@
 import { Express } from 'express'
-import signUpRouter from '../routes/signup-routes'
+import loginRouter from '../routes/login-routes'
 
 export default (app: Express): void => {
-  app.use(signUpRouter)
+  app.use(loginRouter)
 }
