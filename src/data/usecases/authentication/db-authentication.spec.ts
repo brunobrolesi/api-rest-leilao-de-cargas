@@ -1,7 +1,7 @@
 import { AccountModel } from '../../../domain/models/account'
 import { AuthenticationModel } from '../../../domain/usecases/authentication'
 import { HashComparer } from '../../protocols/criptography/hash-comparer'
-import { TokenGenerator } from '../../protocols/criptography/token-generator'
+import { TokenData, TokenGenerator } from '../../protocols/criptography/token-generator'
 import { LoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository'
 import { DbAuthentication } from './db-authentication'
 
@@ -37,7 +37,7 @@ const makeHashComparerStub = (): HashComparer => {
 
 const makeTokenGeneratorStub = (): TokenGenerator => {
   class TokenGeneratorStub implements TokenGenerator {
-    async generate (id: number): Promise<string> {
+    async generate (data: TokenData): Promise<string> {
       return await new Promise(resolve => resolve('any_token'))
     }
   }
@@ -113,11 +113,11 @@ describe('DbAuthentication UseCase', () => {
     expect(token).toBeNull()
   })
 
-  it('Should call TokenGenerator with correct id', async () => {
+  it('Should call TokenGenerator with correct values', async () => {
     const { sut, tokenGeneratorStub } = makeSut()
     const generateSpy = jest.spyOn(tokenGeneratorStub, 'generate')
     await sut.auth(makeFakeAuthentication())
-    expect(generateSpy).toHaveBeenLastCalledWith(1)
+    expect(generateSpy).toHaveBeenLastCalledWith({ id: 1, email: 'email@mail.com' })
   })
 
   it('Should throw if TokenGenerator throws', async () => {

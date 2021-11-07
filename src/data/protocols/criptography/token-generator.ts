@@ -1,3 +1,7 @@
+export interface TokenData {
+  id: number
+  email: string
+}
 export interface TokenGenerator {
-  generate: (id: number) => Promise<string>|string
+  generate: (data: TokenData) => Promise<string>|string
 }
