@@ -3,7 +3,7 @@ import { AddAccount, AddAccountModel } from '../../../domain/usecases/add-accoun
 import { ServerError } from '../../errors/server-error'
 import { BodyValidator } from '../../protocols/body-validator'
 import { ValidatorResult } from '../../protocols/validator-result'
-import { SignUpController } from './signup'
+import { SignUpController } from './signup-controller'
 
 const makeSignUpBodyValidatorStub = (): BodyValidator => {
   class SignUpBodyValidatorStub implements BodyValidator {
