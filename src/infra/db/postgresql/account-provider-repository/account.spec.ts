@@ -71,4 +71,13 @@ describe('Account Provider PostgreSQL Repository', () => {
       active: true
     })
   })
+
+  it('Should return null if loadByEmail fails', async () => {
+    const sut = makeSut()
+    prismaMock.provider.findUnique.mockResolvedValueOnce(null)
+
+    const account = await sut.loadByEmail('any_email')
+
+    expect(account).toBeNull()
+  })
 })
