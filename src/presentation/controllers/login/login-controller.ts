@@ -5,13 +5,10 @@ import { BodyValidator } from '../../protocols/body-validator'
 import { Authentication } from '../../../domain/usecases/authentication'
 
 export class LoginController implements Controller {
-  private readonly loginBodyValidator: BodyValidator
-  private readonly authentication: Authentication
-
-  constructor (loginBodyValidator: BodyValidator, authentication: Authentication) {
-    this.loginBodyValidator = loginBodyValidator
-    this.authentication = authentication
-  }
+  constructor (
+    private readonly loginBodyValidator: BodyValidator,
+    private readonly authentication: Authentication
+  ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {

@@ -5,13 +5,10 @@ import { HttpRequest, HttpResponse } from '../../protocols/http'
 import { BodyValidator } from '../../protocols/body-validator'
 
 export class SignUpController implements Controller {
-  private readonly signUpBodyValidator: BodyValidator
-  private readonly addAccount: AddAccount
-
-  constructor (signUpBodyValidator: BodyValidator, addAccount: AddAccount) {
-    this.signUpBodyValidator = signUpBodyValidator
-    this.addAccount = addAccount
-  }
+  constructor (
+    private readonly signUpBodyValidator: BodyValidator,
+    private readonly addAccount: AddAccount
+  ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
