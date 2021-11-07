@@ -1,6 +1,6 @@
 import request from 'supertest'
-import app from '../config/app'
-import prisma from '../../../client'
+import app from '../../config/app'
+import prisma from '../../../../client'
 import { hash } from 'bcrypt'
 
 describe('Login Routes', () => {
