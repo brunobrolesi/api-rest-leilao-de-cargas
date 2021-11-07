@@ -10,8 +10,7 @@ export class SignUpValidator implements BodyValidator {
       name: Joi.string().min(5).max(80).required(),
       doc: Joi.string().regex(/([0-9]{2}[.]?[0-9]{3}[.]?[0-9]{3}[/]?[0-9]{4}[-]?[0-9]{2})/).required(),
       about: Joi.string().min(5).max(255).required(),
-      site: Joi.string().min(5).max(80).required(),
-      role: Joi.string().regex(/(^customer$)|(^provider$)/).required()
+      site: Joi.string().min(5).max(80).required()
     })
 
     const { error } = schema.validate(body)

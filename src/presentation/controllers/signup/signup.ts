@@ -19,12 +19,13 @@ export class SignUpController implements Controller {
       const { error } = this.signUpBodyValidator.isValid(body)
       if (error) return badRequest(error)
 
-      const { email, password, name, doc, about, site, role } = body
+      const { email, password, name, doc, about, site } = body
 
-      const account = await this.addAccount.add({ email, password, name, doc, about, site, role })
+      const account = await this.addAccount.add({ email, password, name, doc, about, site })
 
       return created(account)
     } catch (error) {
+      console.log(error)
       return serverError()
     }
   }

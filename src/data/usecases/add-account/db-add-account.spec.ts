@@ -19,8 +19,7 @@ const makeFakeAccountData = (): AddAccountModel => ({
   name: 'any_name',
   doc: 'any_doc',
   about: 'any_about',
-  site: 'any_site',
-  role: 'any_role'
+  site: 'any_site'
 })
 
 const makeAddAccountRepository = (): AddAccountRepository => {

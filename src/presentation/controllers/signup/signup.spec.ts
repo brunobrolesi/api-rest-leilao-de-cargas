@@ -41,8 +41,7 @@ const makeFakeHttpRequest = (): any => ({
     name: 'any_name',
     doc: 'any_doc',
     about: 'any_about',
-    site: 'any_site',
-    role: 'any_role'
+    site: 'any_site'
   }
 })
 
@@ -75,8 +74,7 @@ describe('Signup Controller', () => {
       name: 'any_name',
       doc: 'any_doc',
       about: 'any_about',
-      site: 'any_site',
-      role: 'any_role'
+      site: 'any_site'
     })
   })
 
@@ -107,8 +105,7 @@ describe('Signup Controller', () => {
       name: 'any_name',
       doc: 'any_doc',
       about: 'any_about',
-      site: 'any_site',
-      role: 'any_role'
+      site: 'any_site'
     })
   })
 

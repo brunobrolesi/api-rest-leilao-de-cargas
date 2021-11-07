@@ -1,15 +1,15 @@
 import { PrismaClient } from '.prisma/client'
 import { DbAddAccount } from '../../data/usecases/add-account/db-add-account'
 import { BcryptAdapter } from '../../infra/criptography/bcrypt-adapter/bcrypt-adapter'
-import { AccountPostgresRepository } from '../../infra/db/postgresql/account-repository/account'
+import { AccountCustomerPostgresRepository } from '../../infra/db/postgresql/account-customer-repository/account'
 import { SignUpController } from '../../presentation/controllers/signup/signup'
 import { SignUpValidator } from '../../utils/validators/signup-request-body'
 
-export const makeSignUpController = (): SignUpController => {
+export const makeCustomerSignUpController = (): SignUpController => {
   const salt = 12
   const encrypter = new BcryptAdapter(salt)
   const prima = new PrismaClient()
-  const addAccountRepository = new AccountPostgresRepository(prima)
+  const addAccountRepository = new AccountCustomerPostgresRepository(prima)
   const addAccount = new DbAddAccount(encrypter, addAccountRepository)
   const signUpBodyValidator = new SignUpValidator()
   return new SignUpController(signUpBodyValidator, addAccount)

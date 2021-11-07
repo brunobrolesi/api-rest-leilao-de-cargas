@@ -7,7 +7,6 @@ export interface AddAccountModel {
   doc: string
   about: string
   site: string
-  role: string
 }
 
 export interface AddAccount {
