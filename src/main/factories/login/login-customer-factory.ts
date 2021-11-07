@@ -8,7 +8,7 @@ import { Controller } from '../../../presentation/protocols/controller'
 import { LoginValidator } from '../../../utils/validators/login/login-request-body'
 import { env } from '../../config/env'
 
-export const makeCustomerSignUpController = (): Controller => {
+export const makeCustomerLoginController = (): Controller => {
   const prisma = new PrismaClient()
   const loadAccountRepository = new AccountCustomerPostgresRepository(prisma)
   const salt = 12
