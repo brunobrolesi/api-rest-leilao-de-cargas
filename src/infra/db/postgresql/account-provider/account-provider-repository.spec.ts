@@ -1,7 +1,7 @@
 import { prismaMock } from '../../../../../singleton'
 import { AddAccountModel } from '../../../../domain/usecases/add-account'
 import { AccountModel } from '../../../../domain/models/account'
-import { AccountProviderPostgresRepository } from './account'
+import { AccountProviderPostgresRepository } from './account-provider-repository'
 
 const makeSut = (): AccountProviderPostgresRepository => {
   return new AccountProviderPostgresRepository(prismaMock)

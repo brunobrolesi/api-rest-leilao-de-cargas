@@ -1,7 +1,7 @@
 import { PrismaClient } from '.prisma/client'
 import { DbAddAccount } from '../../data/usecases/add-account/db-add-account'
 import { BcryptAdapter } from '../../infra/criptography/bcrypt-adapter/bcrypt-adapter'
-import { AccountCustomerPostgresRepository } from '../../infra/db/postgresql/account-customer-repository/account'
+import { AccountCustomerPostgresRepository } from '../../infra/db/postgresql/account-customer/account-customer-repository'
 import { SignUpController } from '../../presentation/controllers/signup/signup'
 import { SignUpValidator } from '../../utils/validators/signup-request-body'
 
