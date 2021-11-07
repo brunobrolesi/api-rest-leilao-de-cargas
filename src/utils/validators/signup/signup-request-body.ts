@@ -1,5 +1,5 @@
-import { BodyValidator } from '../../presentation/protocols/body-validator'
-import { ValidatorResult } from '../../presentation/protocols/validator-result'
+import { BodyValidator } from '../../../presentation/protocols/body-validator'
+import { ValidatorResult } from '../../../presentation/protocols/validator-result'
 import Joi from 'joi'
 
 export class SignUpValidator implements BodyValidator {
