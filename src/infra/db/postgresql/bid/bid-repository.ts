@@ -1,9 +1,10 @@
 import { PrismaClient, Prisma } from '.prisma/client'
 import { AddBidRepository } from '../../../../data/protocols/db/add-bid-repository'
+import { LoadAllBidsByOfferIdRepository } from '../../../../data/protocols/db/load-all-bids-by-offer-id-repository'
 import { BidModel } from '../../../../domain/models/bid'
 import { AddBidModel } from '../../../../domain/usecases/add-bid'
 
-export class BidPostgresRepository implements AddBidRepository {
+export class BidPostgresRepository implements AddBidRepository, LoadAllBidsByOfferIdRepository {
   constructor (private readonly prisma: PrismaClient) {}
 
   async add (bidData: AddBidModel): Promise<BidModel> {
@@ -13,5 +14,9 @@ export class BidPostgresRepository implements AddBidRepository {
     const bidWithDecimalValues = Object.assign({}, bidData, { value: decimal_value, amount: decimal_amount })
     await this.prisma.bid.create({ data: bidWithDecimalValues })
     return bidData
+  }
+
+  async loadAllByOfferId (offerId: number): Promise<BidModel[]|[]> {
+    return await this.prisma.bid.findMany({ where: { id_offer: offerId } }) as unknown as BidModel[]
   }
 }

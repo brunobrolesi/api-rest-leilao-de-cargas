@@ -57,4 +57,22 @@ describe('Bid Repository', () => {
 
     await expect(promise).rejects.toThrow()
   })
+
+  it('Should call prisma client with correct offerId', async () => {
+    const sut = makeSut()
+    prismaMock.bid.findMany.mockResolvedValueOnce([makeFakeBidModel()] as unknown as Bid[])
+    const spyCreate = jest.spyOn(prismaMock.bid, 'findMany')
+    await sut.loadAllByOfferId(2)
+
+    expect(spyCreate).toHaveBeenCalledWith({ where: { id_offer: 2 } })
+  })
+
+  it('Should return an bid array on loadAllByOfferId success', async () => {
+    const sut = makeSut()
+    prismaMock.bid.findMany.mockResolvedValueOnce([makeFakeBidModel()] as unknown as Bid[])
+
+    const bid = await sut.loadAllByOfferId(2)
+
+    expect(bid).toEqual([makeFakeBidModel()])
+  })
 })
