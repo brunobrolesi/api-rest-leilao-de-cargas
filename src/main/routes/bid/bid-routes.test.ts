@@ -136,4 +136,57 @@ describe('Bid Routes', () => {
         .expect(201)
     })
   })
+
+  describe('/GET /bids/:id', () => {
+    it('Should return 200 if success', async () => {
+      const password = await hash('valid_password', 12)
+      const account = {
+        email: 'email@mail.com',
+        password,
+        name: 'valid_name',
+        doc: '60.429.484/0001-10',
+        about: 'valid_about',
+        site: 'valid_site'
+      }
+
+      const { id: idProvider } = await prisma.provider.create({
+        data: account
+      })
+
+      const { id: idCustomer } = await prisma.customer.create({
+        data: account
+      })
+
+      const offer = {
+        id_customer: idCustomer,
+        from: 'any_location',
+        to: 'any_location',
+        initial_value: new Decimal(100.32),
+        amount: new Decimal(1000),
+        amount_type: 'KG' as AmountType
+      }
+
+      const { id: offerId } = await prisma.offer.create({
+        data: offer
+      })
+
+      const bid = {
+        id_provider: idProvider,
+        id_offer: offerId,
+        value: 100,
+        amount: 100
+      }
+
+      await prisma.bid.create({
+        data: bid
+      })
+
+      const response = await request(app)
+        .post('/bids/2')
+        .send()
+        .expect(200)
+
+      expect(response.body).toHaveLength(1)
+    })
+  })
 })

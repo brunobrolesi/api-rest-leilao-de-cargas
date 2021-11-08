@@ -11,7 +11,8 @@ export class LoadBidsController implements Controller {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { id } = httpRequest.params
-      const bids = await this.loadAllOffersBids.load(id)
+      const numberId = Number(id)
+      const bids = await this.loadAllOffersBids.load(numberId)
       return ok(bids)
     } catch (error) {
       return serverError()
