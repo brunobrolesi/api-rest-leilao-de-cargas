@@ -1,5 +1,5 @@
 import { AddOffer } from '../../../../domain/usecases/add-offer'
-import { badRequest, ok, serverError } from '../../../helpers/http-helper'
+import { badRequest, created, serverError } from '../../../helpers/http-helper'
 import { BodyValidator } from '../../../protocols/body-validator'
 import { Controller } from '../../../protocols/controller'
 import { HttpRequest, HttpResponse } from '../../../protocols/http'
@@ -25,7 +25,7 @@ export class AddOfferController implements Controller {
         amount_type
       } = body
 
-      await this.addOffer.add({
+      const id = await this.addOffer.add({
         id_customer,
         from,
         to,
@@ -33,7 +33,8 @@ export class AddOfferController implements Controller {
         amount,
         amount_type
       })
-      return ok('')
+
+      return created(id)
     } catch (error) {
       return serverError()
     }

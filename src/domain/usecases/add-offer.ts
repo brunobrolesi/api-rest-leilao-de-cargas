@@ -7,6 +7,10 @@ export interface AddOfferModel {
   amount_type: string
 }
 
+export interface OfferId {
+  id: number
+}
+
 export interface AddOffer {
-  add: (data: AddOfferModel) => Promise<void>
+  add: (data: AddOfferModel) => Promise<OfferId>
 }
