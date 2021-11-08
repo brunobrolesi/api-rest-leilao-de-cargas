@@ -1,4 +1,4 @@
-import { AddOffer, AddOfferModel } from '../../../../domain/usecases/add-offer'
+import { AddOffer, AddOfferModel, OfferId } from '../../../../domain/usecases/add-offer'
 import { BodyValidator } from '../../../protocols/body-validator'
 import { ValidatorResult } from '../../../protocols/validator-result'
 import { AddOfferController } from './add-offer-controller'
@@ -15,8 +15,8 @@ const makeAddOfferBodyValidatorStub = (): BodyValidator => {
 
 const makeAddOfferStub = (): AddOffer => {
   class AddOfferStub implements AddOffer {
-    async add (data: AddOfferModel): Promise<void> {
-      return await new Promise(resolve => resolve())
+    async add (data: AddOfferModel): Promise<OfferId> {
+      return await new Promise(resolve => resolve({ id: 1 }))
     }
   }
 
@@ -93,5 +93,12 @@ describe('AddOffer Controller', () => {
       amount: 'any_amount',
       amount_type: 'any_type'
     })
+  })
+
+  it('Should returns 201 and offer id if success', async () => {
+    const { sut } = makeSut()
+    const response = await sut.handle(makeFakeHttpRequest())
+    expect(response.statusCode).toBe(201)
+    expect(response.body).toEqual({ id: 1 })
   })
 })
