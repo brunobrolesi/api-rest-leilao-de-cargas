@@ -14,6 +14,7 @@ export class AuthMiddleware implements Middleware {
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const token = httpRequest.headers?.authorization
+
       if (!token) return forbidden(new MissingAuthToken())
 
       const payload = await this.tokenVerifier.verify(token)
@@ -22,7 +23,11 @@ export class AuthMiddleware implements Middleware {
       const { id, role, email } = payload
       if (this.role !== role) return unauthorized()
 
-      return ok({ id, email })
+      if (role === 'customer') {
+        return ok({ id_customer: id, email })
+      }
+
+      return ok({ id_provider: id, email })
     } catch (error) {
       return forbidden(new InvalidAuthToken())
     }
