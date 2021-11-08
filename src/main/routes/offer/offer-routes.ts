@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { adaptMiddleware } from '../../adapters/express-middleware-adapter'
 import { adaptRoute } from '../../adapters/express-route-adapter'
 import { makeAuthMiddleware } from '../../factories/middlewares/auth-middleware-factory'
-import { makeAddOfferController } from '../../factories/offer/offer-factory'
+import { makeAddOfferController } from '../../factories/offer/add-offer-controller-factory'
 
 const router = Router()
 
