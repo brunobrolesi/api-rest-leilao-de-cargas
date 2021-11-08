@@ -11,7 +11,8 @@ export const adaptMiddleware = (middleware: Middleware): RequestHandler => {
     if (httpResponse.statusCode === 200) {
       req.body = { ...req.body, ...httpResponse.body }
       next()
+    } else {
+      return res.status(httpResponse.statusCode).json(httpResponse.body)
     }
-    return res.status(httpResponse.statusCode).json(httpResponse.body)
   }
 }
