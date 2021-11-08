@@ -15,7 +15,8 @@ jest.mock('jsonwebtoken', () => ({
 
 const makeTokenData = (): TokenData => ({
   id: 1,
-  email: 'any_email@mail.com'
+  email: 'any_email@mail.com',
+  role: 'any_role'
 })
 
 describe('Jwt Adapter', () => {
@@ -27,7 +28,7 @@ describe('Jwt Adapter', () => {
       expiresIn: '2h',
       algorithm: 'HS256'
     }
-    expect(signSpy).toHaveBeenCalledWith({ id: 1, email: 'any_email@mail.com' }, 'secret', jwtConfig)
+    expect(signSpy).toHaveBeenCalledWith({ id: 1, email: 'any_email@mail.com', role: 'any_role' }, 'secret', jwtConfig)
   })
 
   it('Should return a token on sign success', async () => {

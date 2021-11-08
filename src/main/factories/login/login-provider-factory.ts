@@ -15,6 +15,7 @@ export const makeProviderLoginController = (): Controller => {
   const hashComparer = new BcryptAdapter(salt)
   const tokenGenerator = new JwtAdapter(env.jwtSecret)
   const loginBodyValidator = new LoginValidator()
-  const authentication = new DbAuthentication(loadAccountRepository, hashComparer, tokenGenerator)
+  const role = 'provider'
+  const authentication = new DbAuthentication(loadAccountRepository, hashComparer, tokenGenerator, role)
   return new LoginController(loginBodyValidator, authentication)
 }

@@ -7,7 +7,8 @@ export class DbAuthentication implements Authentication {
   constructor (
     private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository,
     private readonly hashComparer: HashComparer,
-    private readonly tokenGenerator: TokenGenerator
+    private readonly tokenGenerator: TokenGenerator,
+    private readonly role: string
   ) {}
 
   async auth (authentication: AuthenticationModel): Promise<string|null> {
@@ -20,6 +21,7 @@ export class DbAuthentication implements Authentication {
     if (!isValidPassword) return null
 
     const { id, email } = account
-    return await this.tokenGenerator.generate({ id, email })
+    const role = this.role
+    return await this.tokenGenerator.generate({ id, email, role })
   }
 }

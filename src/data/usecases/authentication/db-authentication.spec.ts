@@ -56,7 +56,8 @@ const makeSut = (): SutTypes => {
   const loadAccountByEmailRepositoryStub = makeLoadAccountByEmailRepositoryStub()
   const hashComparerStub = makeHashComparerStub()
   const tokenGeneratorStub = makeTokenGeneratorStub()
-  const sut = new DbAuthentication(loadAccountByEmailRepositoryStub, hashComparerStub, tokenGeneratorStub)
+  const role = 'any_role'
+  const sut = new DbAuthentication(loadAccountByEmailRepositoryStub, hashComparerStub, tokenGeneratorStub, role)
   return {
     sut,
     loadAccountByEmailRepositoryStub,
@@ -117,7 +118,7 @@ describe('DbAuthentication UseCase', () => {
     const { sut, tokenGeneratorStub } = makeSut()
     const generateSpy = jest.spyOn(tokenGeneratorStub, 'generate')
     await sut.auth(makeFakeAuthentication())
-    expect(generateSpy).toHaveBeenLastCalledWith({ id: 1, email: 'email@mail.com' })
+    expect(generateSpy).toHaveBeenLastCalledWith({ id: 1, email: 'email@mail.com', role: 'any_role' })
   })
 
   it('Should throw if TokenGenerator throws', async () => {
