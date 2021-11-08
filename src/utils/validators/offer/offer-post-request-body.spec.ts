@@ -8,6 +8,21 @@ describe('OfferPostValidator', () => {
   it('Should return an error if id_customer is not provided', () => {
     const sut = makeSut()
     const body = {
+      email: 'any_emal@mail.com',
+      from: 'any_location',
+      to: 'any_location',
+      initial_value: 100,
+      amount: 100,
+      amount_type: 'KG'
+    }
+    const result = sut.isValid(body)
+    expect(result.error).toBeTruthy()
+  })
+
+  it('Should return an error if email is not provided', () => {
+    const sut = makeSut()
+    const body = {
+      id_customer: 1,
       from: 'any_location',
       to: 'any_location',
       initial_value: 100,
@@ -22,6 +37,7 @@ describe('OfferPostValidator', () => {
     const sut = makeSut()
     const body = {
       id_customer: 1,
+      email: 'any_emal@mail.com',
       to: 'any_location',
       initial_value: 100,
       amount: 100,
@@ -35,6 +51,7 @@ describe('OfferPostValidator', () => {
     const sut = makeSut()
     const body = {
       id_customer: 1,
+      email: 'any_emal@mail.com',
       from: 'any_location',
       initial_value: 100,
       amount: 100,
@@ -48,6 +65,7 @@ describe('OfferPostValidator', () => {
     const sut = makeSut()
     const body = {
       id_customer: 1,
+      email: 'any_emal@mail.com',
       from: 'any_location',
       to: 'any_location',
       amount: 100,
@@ -61,6 +79,7 @@ describe('OfferPostValidator', () => {
     const sut = makeSut()
     const body = {
       id_customer: 1,
+      email: 'any_emal@mail.com',
       from: 'any_location',
       to: 'any_location',
       initial_value: 100,
@@ -74,6 +93,7 @@ describe('OfferPostValidator', () => {
     const sut = makeSut()
     const body = {
       id_customer: 1,
+      email: 'any_emal@mail.com',
       from: 'any_location',
       to: 'any_location',
       initial_value: 100,
@@ -87,6 +107,7 @@ describe('OfferPostValidator', () => {
     const sut = makeSut()
     const body = {
       id_customer: 1,
+      email: 'any_emal@mail.com',
       from: 'any_location',
       to: 'any_location',
       initial_value: 100,
@@ -101,6 +122,7 @@ describe('OfferPostValidator', () => {
     const sut = makeSut()
     const body = {
       id_customer: 1,
+      email: 'any_emal@mail.com',
       from: 'any_location',
       to: 'any_location',
       initial_value: 100,
