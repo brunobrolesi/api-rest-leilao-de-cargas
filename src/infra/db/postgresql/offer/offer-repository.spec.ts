@@ -64,4 +64,30 @@ describe('Offer Repository', () => {
 
     await expect(promise).rejects.toThrow()
   })
+
+  it('Should return an offer on loadById success', async () => {
+    const sut = makeSut()
+    prismaMock.offer.findUnique.mockResolvedValueOnce(makeFakeOfferModel() as unknown as Offer)
+
+    const offer = await sut.loadById(1)
+
+    expect(offer).toEqual({
+      id: 1,
+      id_customer: 1,
+      from: 'any_location',
+      to: 'any_location',
+      initial_value: 100,
+      amount: 100,
+      amount_type: 'any_type'
+    })
+  })
+
+  it('Should return null if loadByEmail fails', async () => {
+    const sut = makeSut()
+    prismaMock.offer.findUnique.mockResolvedValueOnce(null)
+
+    const offer = await sut.loadById(1)
+
+    expect(offer).toBeNull()
+  })
 })
