@@ -90,4 +90,30 @@ describe('Offer Repository', () => {
 
     expect(offer).toBeNull()
   })
+
+  it('Should return offers array on loadById success', async () => {
+    const sut = makeSut()
+    prismaMock.offer.findMany.mockResolvedValueOnce([makeFakeOfferModel() as unknown as Offer])
+
+    const offers = await sut.loadAll()
+
+    expect(offers).toEqual([{
+      id: 1,
+      id_customer: 1,
+      from: 'any_location',
+      to: 'any_location',
+      initial_value: 100,
+      amount: 100,
+      amount_type: 'any_type'
+    }])
+  })
+
+  it('Should throws if prisma findMany throws', async () => {
+    const sut = makeSut()
+    prismaMock.offer.findMany.mockRejectedValue(new Error())
+
+    const promise = sut.loadAll()
+
+    await expect(promise).rejects.toThrow()
+  })
 })

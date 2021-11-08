@@ -1,10 +1,11 @@
 import { PrismaClient, Prisma, AmountType } from '.prisma/client'
 import { AddOfferRepository } from '../../../../data/protocols/db/add-offer-repository'
+import { LoadAllOffersRepository } from '../../../../data/protocols/db/load-all-offers-repository'
 import { LoadOfferByIdRepository } from '../../../../data/protocols/db/load-offer-by-id-repository'
 import { OfferModel } from '../../../../domain/models/offer'
 import { AddOfferModel } from '../../../../domain/usecases/add-offer'
 
-export class OfferPostgresRepository implements AddOfferRepository, LoadOfferByIdRepository {
+export class OfferPostgresRepository implements AddOfferRepository, LoadOfferByIdRepository, LoadAllOffersRepository {
   constructor (private readonly prisma: PrismaClient) {}
 
   async add (offerData: AddOfferModel): Promise<OfferModel> {
@@ -19,5 +20,9 @@ export class OfferPostgresRepository implements AddOfferRepository, LoadOfferByI
 
   async loadById (id: number): Promise<OfferModel|null> {
     return this.prisma.offer.findUnique({ where: { id } }) as unknown as OfferModel
+  }
+
+  async loadAll (): Promise<OfferModel[]|[]> {
+    return this.prisma.offer.findMany() as unknown as OfferModel[]
   }
 }
