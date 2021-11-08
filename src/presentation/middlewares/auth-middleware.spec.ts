@@ -70,6 +70,13 @@ describe('Auth Middleware', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeHttpRequest())
     expect(httpResponse.statusCode).toBe(200)
-    expect(httpResponse.body).toEqual({ id: 1, email: 'any@mail.com' })
+    expect(httpResponse.body).toEqual({ id_provider: 1, email: 'any@mail.com' })
+  })
+
+  it('Should return 403 verify throws', async () => {
+    const { sut, tokenVerifierStub } = makeSut()
+    jest.spyOn(tokenVerifierStub, 'verify').mockImplementationOnce(() => { throw new Error() })
+    const httpResponse = await sut.handle(makeHttpRequest())
+    expect(httpResponse).toEqual(forbidden(new InvalidAuthToken()))
   })
 })
