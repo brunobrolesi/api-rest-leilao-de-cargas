@@ -52,4 +52,18 @@ describe('AddOffer Controller', () => {
       amount_type: 'any_type'
     })
   })
+
+  it('Should return 400 if validator returns an error', async () => {
+    const { sut, addOfferBodyValidatorStub } = makeSut()
+    jest.spyOn(addOfferBodyValidatorStub, 'isValid').mockReturnValueOnce({ error: new Error('any_message') })
+    const response = await sut.handle(makeFakeHttpRequest())
+    expect(response.statusCode).toBe(400)
+  })
+
+  it('Should return error message in body if validator returns an error', async () => {
+    const { sut, addOfferBodyValidatorStub } = makeSut()
+    jest.spyOn(addOfferBodyValidatorStub, 'isValid').mockReturnValueOnce({ error: new Error('any_message') })
+    const response = await sut.handle(makeFakeHttpRequest())
+    expect(response.body.message).toBe('any_message')
+  })
 })
