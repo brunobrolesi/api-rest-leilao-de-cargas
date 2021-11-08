@@ -1,8 +1,8 @@
-import { AddBid } from '../../../domain/usecases/add-bid'
-import { badRequest, created, serverError } from '../../helpers/http-helper'
-import { BodyValidator } from '../../protocols/body-validator'
-import { Controller } from '../../protocols/controller'
-import { HttpRequest, HttpResponse } from '../../protocols/http'
+import { AddBid } from '../../../../domain/usecases/add-bid'
+import { badRequest, created, serverError } from '../../../helpers/http-helper'
+import { BodyValidator } from '../../../protocols/body-validator'
+import { Controller } from '../../../protocols/controller'
+import { HttpRequest, HttpResponse } from '../../../protocols/http'
 
 export class AddBidController implements Controller {
   constructor (
