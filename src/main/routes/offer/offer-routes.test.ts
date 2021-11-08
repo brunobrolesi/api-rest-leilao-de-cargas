@@ -4,6 +4,55 @@ import prisma from '../../../../client'
 import { hash } from 'bcrypt'
 import { Decimal } from '@prisma/client/runtime'
 import { AmountType } from '.prisma/client'
+import { AccountModel } from '../../../domain/models/account'
+import { OfferModel } from '../../../domain/models/offer'
+
+const makeProviderAccount = async (): Promise<AccountModel> => {
+  const password = await hash('valid_password', 12)
+  const account = {
+    email: 'email@mail.com',
+    password,
+    name: 'valid_name',
+    doc: '60.429.484/0001-10',
+    about: 'valid_about',
+    site: 'valid_site'
+  }
+
+  return await prisma.provider.create({
+    data: account
+  })
+}
+
+const makeCustomerAccount = async (): Promise<AccountModel> => {
+  const password = await hash('valid_password', 12)
+  const account = {
+    email: 'email@mail.com',
+    password,
+    name: 'valid_name',
+    doc: '60.429.484/0001-10',
+    about: 'valid_about',
+    site: 'valid_site'
+  }
+
+  return await prisma.customer.create({
+    data: account
+  })
+}
+
+const makeOffer = async (idCustomer: number): Promise<OfferModel> => {
+  const offer = {
+    id_customer: idCustomer,
+    from: 'any_location',
+    to: 'any_location',
+    initial_value: new Decimal(100.32),
+    amount: new Decimal(1000),
+    amount_type: 'KG' as AmountType
+  }
+
+  return await prisma.offer.create({
+    data: offer
+  }) as unknown as OfferModel
+}
 
 describe('Offer Routes', () => {
   beforeEach(async () => {
@@ -50,19 +99,7 @@ describe('Offer Routes', () => {
     })
 
     it('Should return 401 when token belongs to an provider', async () => {
-      const password = await hash('valid_password', 12)
-      const account = {
-        email: 'email@mail.com',
-        password,
-        name: 'valid_name',
-        doc: '60.429.484/0001-10',
-        about: 'valid_about',
-        site: 'valid_site'
-      }
-
-      await prisma.provider.create({
-        data: account
-      })
+      await makeProviderAccount()
 
       const loginResponse = await request(app)
         .post('/providers/login')
@@ -90,19 +127,7 @@ describe('Offer Routes', () => {
     })
 
     it('Should return 201 and offer id when token is valid', async () => {
-      const password = await hash('valid_password', 12)
-      const account = {
-        email: 'email@mail.com',
-        password,
-        name: 'valid_name',
-        doc: '60.429.484/0001-10',
-        about: 'valid_about',
-        site: 'valid_site'
-      }
-
-      await prisma.customer.create({
-        data: account
-      })
+      await makeCustomerAccount()
 
       const loginResponse = await request(app)
         .post('/customers/login')
@@ -132,40 +157,12 @@ describe('Offer Routes', () => {
 
   describe('/GET /offers', () => {
     it('Should return 200 success', async () => {
-      const password = await hash('valid_password', 12)
-      const account = {
-        email: 'email@mail.com',
-        password,
-        name: 'valid_name',
-        doc: '60.429.484/0001-10',
-        about: 'valid_about',
-        site: 'valid_site'
-      }
+      await makeProviderAccount()
 
-      await prisma.provider.create({
-        data: account
-      })
+      const { id: idCustomer } = await makeCustomerAccount()
 
-      const { id: idCustomer } = await prisma.customer.create({
-        data: account
-      })
-
-      const offer = {
-        id_customer: idCustomer,
-        from: 'any_location',
-        to: 'any_location',
-        initial_value: new Decimal(100.32),
-        amount: new Decimal(1000),
-        amount_type: 'KG' as AmountType
-      }
-
-      await prisma.offer.create({
-        data: offer
-      })
-
-      await prisma.offer.create({
-        data: offer
-      })
+      await makeOffer(idCustomer)
+      await makeOffer(idCustomer)
 
       const response = await request(app)
         .get('/offers')
