@@ -12,15 +12,19 @@ export class AuthMiddleware implements Middleware {
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-    const token = httpRequest.headers?.authorization
-    if (!token) return forbidden(new MissingAuthToken())
+    try {
+      const token = httpRequest.headers?.authorization
+      if (!token) return forbidden(new MissingAuthToken())
 
-    const payload = await this.tokenVerifier.verify(token)
-    if (!payload) return forbidden(new InvalidAuthToken())
+      const payload = await this.tokenVerifier.verify(token)
+      if (!payload) return forbidden(new InvalidAuthToken())
 
-    const { id, role, email } = payload
-    if (this.role !== role) return unauthorized()
+      const { id, role, email } = payload
+      if (this.role !== role) return unauthorized()
 
-    return ok({ id, email })
+      return ok({ id, email })
+    } catch (error) {
+      return forbidden(new InvalidAuthToken())
+    }
   }
 }
