@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import { TokenData } from '../../../data/protocols/criptography/token-generator'
 import { JwtAdapter } from './jwt-adapter'
 
@@ -10,6 +10,13 @@ const makeSut = (): JwtAdapter => {
 jest.mock('jsonwebtoken', () => ({
   sign (): string {
     return 'any_token'
+  },
+  verify (): JwtPayload {
+    return {
+      id: 1,
+      email: 'any_email',
+      role: 'any:role'
+    }
   }
 }))
 
@@ -41,5 +48,28 @@ describe('Jwt Adapter', () => {
     const sut = makeSut()
     jest.spyOn(jwt, 'sign').mockImplementationOnce(() => { throw new Error() })
     expect(() => sut.generate(makeTokenData())).toThrow()
+  })
+
+  it('Should call verify with correct values', async () => {
+    const sut = makeSut()
+    const signSpy = jest.spyOn(jwt, 'verify')
+    sut.verify('any_token')
+    expect(signSpy).toHaveBeenCalledWith('any_token', 'secret')
+  })
+
+  it('Should return a token payload on verify success', async () => {
+    const sut = makeSut()
+    const token = sut.verify('any_token')
+    expect(token).toEqual({
+      id: 1,
+      email: 'any_email',
+      role: 'any:role'
+    })
+  })
+
+  it('Should throw if verify throws', async () => {
+    const sut = makeSut()
+    jest.spyOn(jwt, 'verify').mockImplementationOnce(() => { throw new Error() })
+    expect(() => sut.verify('any_token')).toThrow()
   })
 })
