@@ -70,5 +70,45 @@ describe('Offer Routes', () => {
 
       expect(response.body.id).toBeTruthy()
     })
+
+    it('Should return 401 when token belongs to an provider', async () => {
+      const password = await hash('valid_password', 12)
+      const account = {
+        email: 'email@mail.com',
+        password,
+        name: 'valid_name',
+        doc: '60.429.484/0001-10',
+        about: 'valid_about',
+        site: 'valid_site'
+      }
+
+      await prisma.provider.create({
+        data: account
+      })
+
+      const loginResponse = await request(app)
+        .post('/providers/login')
+        .send({
+          email: 'email@mail.com',
+          password: 'valid_password'
+        })
+        .expect(200)
+
+      const { token } = loginResponse.body
+
+      const response = await request(app)
+        .post('/offers')
+        .set('authorization', token)
+        .send({
+          from: 'any_location',
+          to: 'any_location',
+          initial_value: 100.32,
+          amount: 100,
+          amount_type: 'KG'
+        })
+        .expect(401)
+
+      expect(response.body.message).toBeTruthy()
+    })
   })
 })
