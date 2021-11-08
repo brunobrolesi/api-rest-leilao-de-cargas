@@ -39,7 +39,7 @@ model Offer {
   to              String      @db.VarChar(80)
   initial_value   Decimal     @db.Decimal(9, 2)
   amount          Decimal     @db.Decimal(9, 2)
-  amount_type     AmounType   @default(KG)
+  amount_type     AmountType   @default(KG)
   bids            Bid[]
 }
 
@@ -54,7 +54,7 @@ model Bid {
   @@id([id_provider, id_offer])
 }
 
-enum AmounType {
+enum AmountType {
   KG
   TON
 }
