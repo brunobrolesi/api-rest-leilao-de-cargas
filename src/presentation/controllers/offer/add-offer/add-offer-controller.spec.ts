@@ -29,8 +29,8 @@ const makeFakeHttpRequest = (): any => ({
     id_customer: 1,
     from: 'any_location',
     to: 'any_location',
-    initial_value: 'any_value',
-    amount: 'any_amount',
+    initial_value: 100,
+    amount: 100,
     amount_type: 'any_type'
   }
 })
@@ -62,8 +62,8 @@ describe('AddOffer Controller', () => {
       id_customer: 1,
       from: 'any_location',
       to: 'any_location',
-      initial_value: 'any_value',
-      amount: 'any_amount',
+      initial_value: 100,
+      amount: 100,
       amount_type: 'any_type'
     })
   })
@@ -90,8 +90,8 @@ describe('AddOffer Controller', () => {
       id_customer: 1,
       from: 'any_location',
       to: 'any_location',
-      initial_value: 'any_value',
-      amount: 'any_amount',
+      initial_value: 100,
+      amount: 100,
       amount_type: 'any_type'
     })
   })
