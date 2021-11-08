@@ -5,10 +5,12 @@ import { hash } from 'bcrypt'
 
 describe('Login Routes', () => {
   beforeEach(async () => {
+    const deleteBids = prisma.bid.deleteMany()
+    const deleteOffers = prisma.offer.deleteMany()
     const deleteCustomers = prisma.customer.deleteMany()
     const deleteProviders = prisma.provider.deleteMany()
 
-    await prisma.$transaction([deleteCustomers, deleteProviders])
+    await prisma.$transaction([deleteBids, deleteOffers, deleteCustomers, deleteProviders])
 
     await prisma.$disconnect()
   })
