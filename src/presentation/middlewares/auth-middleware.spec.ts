@@ -1,4 +1,5 @@
 import { TokenPayload, TokenVerifier } from '../../data/protocols/criptography/token-verifier'
+import { InvalidAuthToken } from '../errors/invalid-auth-token'
 import { MissingAuthToken } from '../errors/missing-auth-token'
 import { forbidden, unauthorized } from '../helpers/http-helper'
 import { HttpRequest } from '../protocols/http'
@@ -51,10 +52,24 @@ describe('Auth Middleware', () => {
     expect(spyVerify).toHaveBeenCalledWith('any_token')
   })
 
+  it('Should return 403 if token is invalid', async () => {
+    const { sut, tokenVerifierStub } = makeSut()
+    jest.spyOn(tokenVerifierStub, 'verify').mockReturnValueOnce(null as unknown as TokenPayload)
+    const httpResponse = await sut.handle(makeHttpRequest())
+    expect(httpResponse).toEqual(forbidden(new InvalidAuthToken()))
+  })
+
   it('Should return 401 if role is unauthorized', async () => {
     const { sut, tokenVerifierStub } = makeSut()
     jest.spyOn(tokenVerifierStub, 'verify').mockReturnValueOnce({ id: 1, email: 'any@mail.com', role: 'invalid_role' })
     const httpResponse = await sut.handle(makeHttpRequest())
     expect(httpResponse).toEqual(unauthorized())
+  })
+
+  it('Should return 200, id and email if success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeHttpRequest())
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({ id: 1, email: 'any@mail.com' })
   })
 })
