@@ -1,6 +1,6 @@
 import { TokenPayload, TokenVerifier } from '../../data/protocols/criptography/token-verifier'
 import { MissingAuthToken } from '../errors/missing-auth-token'
-import { forbidden } from '../helpers/http-helper'
+import { forbidden, unauthorized } from '../helpers/http-helper'
 import { HttpRequest } from '../protocols/http'
 import { AuthMiddleware } from './auth-middleware'
 
@@ -21,8 +21,9 @@ interface SutTypes {
 }
 
 const makeSut = (): SutTypes => {
+  const role = 'any_role'
   const tokenVerifierStub = makeTokenVerifierStub()
-  const sut = new AuthMiddleware(tokenVerifierStub)
+  const sut = new AuthMiddleware(tokenVerifierStub, role)
 
   return {
     sut,
@@ -48,5 +49,12 @@ describe('Auth Middleware', () => {
     const spyVerify = jest.spyOn(tokenVerifierStub, 'verify')
     await sut.handle(makeHttpRequest())
     expect(spyVerify).toHaveBeenCalledWith('any_token')
+  })
+
+  it('Should return 401 if role is unauthorized', async () => {
+    const { sut, tokenVerifierStub } = makeSut()
+    jest.spyOn(tokenVerifierStub, 'verify').mockReturnValueOnce({ id: 1, email: 'any@mail.com', role: 'invalid_role' })
+    const httpResponse = await sut.handle(makeHttpRequest())
+    expect(httpResponse).toEqual(unauthorized())
   })
 })
