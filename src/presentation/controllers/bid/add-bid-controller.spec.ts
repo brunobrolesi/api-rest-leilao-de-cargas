@@ -2,7 +2,7 @@ import { AddBid, AddBidModel } from '../../../domain/usecases/add-bid'
 import { ServerError } from '../../errors/server-error'
 import { BodyValidator } from '../../protocols/body-validator'
 import { ValidatorResult } from '../../protocols/validator-result'
-import { AddBidController } from './add-big-controller'
+import { AddBidController } from './add-bid-controller'
 
 const makeAddBidBodyValidatorStub = (): BodyValidator => {
   class SignUpBodyValidatorStub implements BodyValidator {
