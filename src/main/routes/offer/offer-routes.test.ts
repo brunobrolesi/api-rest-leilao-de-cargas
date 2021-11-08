@@ -2,6 +2,8 @@ import request from 'supertest'
 import app from '../../config/app'
 import prisma from '../../../../client'
 import { hash } from 'bcrypt'
+import { Decimal } from '@prisma/client/runtime'
+import { AmountType } from '.prisma/client'
 
 describe('Offer Routes', () => {
   beforeEach(async () => {
@@ -125,6 +127,53 @@ describe('Offer Routes', () => {
         .expect(201)
 
       expect(response.body.id).toBeTruthy()
+    })
+  })
+
+  describe('/GET /offers', () => {
+    it('Should return 200 success', async () => {
+      const password = await hash('valid_password', 12)
+      const account = {
+        email: 'email@mail.com',
+        password,
+        name: 'valid_name',
+        doc: '60.429.484/0001-10',
+        about: 'valid_about',
+        site: 'valid_site'
+      }
+
+      await prisma.provider.create({
+        data: account
+      })
+
+      const { id: idCustomer } = await prisma.customer.create({
+        data: account
+      })
+
+      const offer = {
+        id_customer: idCustomer,
+        from: 'any_location',
+        to: 'any_location',
+        initial_value: new Decimal(100.32),
+        amount: new Decimal(1000),
+        amount_type: 'KG' as AmountType
+      }
+
+      await prisma.offer.create({
+        data: offer
+      })
+
+      await prisma.offer.create({
+        data: offer
+      })
+
+      const response = await request(app)
+        .get('/offers')
+        .send({})
+        .expect(200)
+
+      expect(response.body).not.toBeNull()
+      expect(response.body).toHaveLength(2)
     })
   })
 })
