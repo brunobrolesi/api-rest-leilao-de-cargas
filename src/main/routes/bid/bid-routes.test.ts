@@ -4,6 +4,69 @@ import prisma from '../../../../client'
 import { hash } from 'bcrypt'
 import { Decimal } from '@prisma/client/runtime'
 import { AmountType } from '.prisma/client'
+import { AccountModel } from '../../../domain/models/account'
+import { OfferModel } from '../../../domain/models/offer'
+import { BidModel } from '../../../domain/models/bid'
+
+const makeProviderAccount = async (): Promise<AccountModel> => {
+  const password = await hash('valid_password', 12)
+  const account = {
+    email: 'email@mail.com',
+    password,
+    name: 'valid_name',
+    doc: '60.429.484/0001-10',
+    about: 'valid_about',
+    site: 'valid_site'
+  }
+
+  return await prisma.provider.create({
+    data: account
+  })
+}
+
+const makeCustomerAccount = async (): Promise<AccountModel> => {
+  const password = await hash('valid_password', 12)
+  const account = {
+    email: 'email@mail.com',
+    password,
+    name: 'valid_name',
+    doc: '60.429.484/0001-10',
+    about: 'valid_about',
+    site: 'valid_site'
+  }
+
+  return await prisma.customer.create({
+    data: account
+  })
+}
+
+const makeOffer = async (idCustomer: number): Promise<OfferModel> => {
+  const offer = {
+    id_customer: idCustomer,
+    from: 'any_location',
+    to: 'any_location',
+    initial_value: new Decimal(100.32),
+    amount: new Decimal(1000),
+    amount_type: 'KG' as AmountType
+  }
+
+  return await prisma.offer.create({
+    data: offer
+  }) as unknown as OfferModel
+}
+
+const makeBid = async (idProvider: number, offerId: number): Promise<BidModel> => {
+  const bid = {
+    id_provider: idProvider,
+    id_offer: offerId,
+    value: 100,
+    amount: 100
+  }
+
+  return await prisma.bid.create({
+    data: bid
+  }) as unknown as BidModel
+}
 
 describe('Bid Routes', () => {
   beforeEach(async () => {
@@ -46,19 +109,7 @@ describe('Bid Routes', () => {
     })
 
     it('Should return 401 when token belongs to an customer', async () => {
-      const password = await hash('valid_password', 12)
-      const account = {
-        email: 'email@mail.com',
-        password,
-        name: 'valid_name',
-        doc: '60.429.484/0001-10',
-        about: 'valid_about',
-        site: 'valid_site'
-      }
-
-      await prisma.customer.create({
-        data: account
-      })
+      await makeCustomerAccount()
 
       const loginResponse = await request(app)
         .post('/customers/login')
@@ -84,36 +135,11 @@ describe('Bid Routes', () => {
     })
 
     it('Should return 201 when token is valid', async () => {
-      const password = await hash('valid_password', 12)
-      const account = {
-        email: 'email@mail.com',
-        password,
-        name: 'valid_name',
-        doc: '60.429.484/0001-10',
-        about: 'valid_about',
-        site: 'valid_site'
-      }
+      await makeProviderAccount()
 
-      await prisma.provider.create({
-        data: account
-      })
+      const { id: idCustomer } = await makeCustomerAccount()
 
-      const { id: idCustomer } = await prisma.customer.create({
-        data: account
-      })
-
-      const offer = {
-        id_customer: idCustomer,
-        from: 'any_location',
-        to: 'any_location',
-        initial_value: new Decimal(100.32),
-        amount: new Decimal(1000),
-        amount_type: 'KG' as AmountType
-      }
-
-      const { id: idOffer } = await prisma.offer.create({
-        data: offer
-      })
+      const { id: idOffer } = await makeOffer(idCustomer)
 
       const loginResponse = await request(app)
         .post('/providers/login')
@@ -139,53 +165,18 @@ describe('Bid Routes', () => {
 
   describe('/GET /bids/:id', () => {
     it('Should return 200 if success', async () => {
-      const password = await hash('valid_password', 12)
-      const account = {
-        email: 'email@mail.com',
-        password,
-        name: 'valid_name',
-        doc: '60.429.484/0001-10',
-        about: 'valid_about',
-        site: 'valid_site'
-      }
+      const { id: idProvider } = await makeProviderAccount()
 
-      const { id: idProvider } = await prisma.provider.create({
-        data: account
-      })
+      const { id: idCustomer } = await makeCustomerAccount()
 
-      const { id: idCustomer } = await prisma.customer.create({
-        data: account
-      })
+      const { id: idOffer } = await makeOffer(idCustomer)
 
-      const offer = {
-        id_customer: idCustomer,
-        from: 'any_location',
-        to: 'any_location',
-        initial_value: new Decimal(100.32),
-        amount: new Decimal(1000),
-        amount_type: 'KG' as AmountType
-      }
-
-      const { id: offerId } = await prisma.offer.create({
-        data: offer
-      })
-
-      const bid = {
-        id_provider: idProvider,
-        id_offer: offerId,
-        value: 100,
-        amount: 100
-      }
-
-      await prisma.bid.create({
-        data: bid
-      })
+      await makeBid(idProvider, idOffer)
 
       const response = await request(app)
-        .post('/bids/2')
+        .post(`/bids/${idOffer}`)
         .send()
         .expect(200)
-
       expect(response.body).toHaveLength(1)
     })
   })
