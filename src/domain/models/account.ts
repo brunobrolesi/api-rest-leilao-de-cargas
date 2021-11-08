@@ -8,3 +8,9 @@ export interface AccountModel {
   site: string
   active: boolean
 }
+
+export interface ResumedAccountModel {
+  id: number
+  name: string
+  doc: string
+}
