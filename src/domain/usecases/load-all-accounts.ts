@@ -1,5 +1,5 @@
 import { ResumedAccountModel } from '../models/account'
 
-export interface LoadAllProviders {
+export interface LoadAllAccounts {
   load: () => Promise<ResumedAccountModel[]>
 }
