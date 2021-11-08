@@ -1,4 +1,5 @@
 import { AddOffer, AddOfferModel, OfferId } from '../../../../domain/usecases/add-offer'
+import { ServerError } from '../../../errors/server-error'
 import { BodyValidator } from '../../../protocols/body-validator'
 import { ValidatorResult } from '../../../protocols/validator-result'
 import { AddOfferController } from './add-offer-controller'
@@ -93,6 +94,14 @@ describe('AddOffer Controller', () => {
       amount: 'any_amount',
       amount_type: 'any_type'
     })
+  })
+
+  it('Should return 500 if addOffer throws', async () => {
+    const { sut, addOfferStub } = makeSut()
+    jest.spyOn(addOfferStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    const response = await sut.handle(makeFakeHttpRequest())
+    expect(response.statusCode).toBe(500)
+    expect(response.body).toEqual(new ServerError())
   })
 
   it('Should returns 201 and offer id if success', async () => {
