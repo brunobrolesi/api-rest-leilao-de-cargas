@@ -23,7 +23,7 @@ $ cd api-rest-transporte-de-cargas
 $ npm install
 
 # Defina as variáveis de ambiente em um arquivo .env seguindo o explempo fornecido, pode-se apenas renomea-lo para .env para facilitar o processo
-$ mv .env-example .env
+$ mv .env.example .env
 
 # Rode os testes (opcional)
 $ npm test
