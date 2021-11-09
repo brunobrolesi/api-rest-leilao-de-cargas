@@ -4,14 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "dotenv -e .env sucrase-node src/main/server.ts",
-    "test": "npm run docker:up && npm run migrate:testdb && npm run jest && npm run docker:down",
+    "up": "docker-compose up -d",
+    "down": "docker-compose down",
+    "build": "rimraf dist && tsc",
+    "start": "node dist/main/server.js",
+    "deploy": "npm run up && npx prisma migrate deploy && npm run build && npm start && npm run down",
+    "dev": "dotenv -e .env sucrase-node src/main/server.ts",
+    "test": "npm run up:test && npm run migrate:testdb && npm run jest && npm run down:test",
     "jest": "dotenv -e .env.test -- jest --passWithNoTests --runInBand",
-    "test:staged": "",
     "prepare": "husky install",
-    "migrate:testdb": "dotenv -e .env.test -- npx prisma migrate dev --name postgres-init",
-    "docker:up": "docker-compose up -d",
-    "docker:down": "docker-compose down"
+    "migrate:testdb": "dotenv -e .env.test -- npx prisma migrate dev",
+    "up:test": "docker-compose -f docker-compose-test.yml up -d",
+    "down:test": "docker-compose -f docker-compose-test.yml down"
   },
   "repository": {
     "type": "git",
@@ -45,6 +49,7 @@
     "jest-mock-extended": "^2.0.4",
     "lint-staged": "^11.2.6",
     "prisma": "^3.4.1",
+    "rimraf": "^3.0.2",
     "sucrase": "^3.20.3",
     "supertest": "^6.1.6",
     "ts-jest": "^27.0.7",
