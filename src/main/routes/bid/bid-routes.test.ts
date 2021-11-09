@@ -174,7 +174,7 @@ describe('Bid Routes', () => {
       await makeBid(idProvider, idOffer)
 
       const response = await request(app)
-        .post(`/bids/${idOffer}`)
+        .get(`/bids/${idOffer}`)
         .send()
         .expect(200)
       expect(response.body).toHaveLength(1)
