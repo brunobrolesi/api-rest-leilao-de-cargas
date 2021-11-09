@@ -21,6 +21,7 @@ import { accountsGetResponseBodySchema } from './schemas/accounts/account-get-re
 import { customersPath } from './path/accounts/customers'
 import { providersPath } from './path/accounts/providers'
 import { bidsGetResponseBodySchema } from './schemas/bids/bids-get-response-body-schema'
+import { signUpResponseBodySchema } from './schemas/login/signup-response-body-shema'
 
 export default {
   openapi: '3.0.0',
@@ -57,7 +58,7 @@ export default {
     loginResponseBody: loginResponseBodySchema,
     loginRequestBody: loginRequestBodySchema,
     signUpRequestBody: signUpRequestBodySchema,
-    signUpResponseBody: signUpRequestBodySchema,
+    signUpResponseBody: signUpResponseBodySchema,
     offersPostRequestBody: offersPostRequestBodySchema,
     offersPostResponseBody: offersPostResponseBodySchema,
     offersGetResponseBody: offersGetResponseBodySchema,

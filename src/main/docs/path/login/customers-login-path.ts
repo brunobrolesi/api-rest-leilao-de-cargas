@@ -7,6 +7,10 @@ export const customersLoginPath = {
         'application/json': {
           schema: {
             $ref: '#/schemas/loginRequestBody'
+          },
+          example: {
+            email: 'email@mail.com',
+            password: 'valid_password'
           }
         }
       }

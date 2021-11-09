@@ -1,6 +1,9 @@
-export const signUpRequestBodySchema = {
+export const signUpResponseBodySchema = {
   type: 'object',
   properties: {
+    id: {
+      type: 'integer'
+    },
     email: {
       type: 'string'
     },
@@ -19,6 +22,8 @@ export const signUpRequestBodySchema = {
     site: {
       type: 'string'
     },
-    active: 'boolean'
+    active: {
+      type: 'boolean'
+    }
   }
 }
