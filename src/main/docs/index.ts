@@ -27,7 +27,7 @@ import { BidsInOfferPath } from './path/bids/bids-in-offer-path'
 export default {
   openapi: '3.0.0',
   info: {
-    title: 'Teste BackEnd GoFlux',
+    title: 'API REST TRANSPORTE DE CARGAS',
     description: 'API REST capaz de cadastrar e obter informações de Embarcadores, Transportadores, Ofertas e Lances',
     version: '1.0.0'
   },
