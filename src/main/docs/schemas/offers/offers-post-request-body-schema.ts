@@ -1,9 +1,6 @@
 export const offersPostRequestBodySchema = {
   type: 'object',
   properties: {
-    id_customer: {
-      type: 'integer'
-    },
     from: {
       type: 'string'
     },

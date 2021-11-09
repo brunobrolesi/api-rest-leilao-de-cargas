@@ -12,7 +12,7 @@ export const providersSignUpPath = {
       }
     },
     responses: {
-      200: {
+      201: {
         description: 'Sucesso',
         content: {
           'application/json': {

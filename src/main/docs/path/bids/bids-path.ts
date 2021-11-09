@@ -1,22 +1,20 @@
-export const OfferPath = {
+export const BidsPath = {
   post: {
     security: [{
       apiKeyAuth: []
     }],
-    tags: ['Offers'],
-    summary: 'Rota para Embarcadores realizarem o cadastro de ofertas',
+    tags: ['Bids'],
+    summary: 'Rota para Transportadores realizarem o cadastro de lances',
     requestBody: {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/schemas/offersPostRequestBody'
+            $ref: '#/schemas/bidsPostRequestBody'
           },
           example: {
-            from: 'São Paulo - SP',
-            to: 'Rio de Janeiro - RJ',
-            initial_value: 10000,
-            amount: 50000,
-            amount_type: 'KG'
+            id_offer: 1,
+            value: 1000,
+            amount: 500
           }
         }
       }
@@ -27,7 +25,7 @@ export const OfferPath = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/schemas/offersPostResponseBody'
+              $ref: '#/schemas/bidsPostResponseBody'
             }
           }
         }
@@ -47,15 +45,26 @@ export const OfferPath = {
     }
   },
   get: {
-    tags: ['Offers'],
-    summary: 'Rota para obtenção das ofertas cadastradas',
+    tags: ['Bids'],
+    summary: 'Rota para obtenção dos lances cadastrados em uma determinada oferta',
+    parameters: [
+      {
+        in: 'path',
+        name: 'offerId',
+        schema: {
+          type: 'integer'
+        },
+        required: 'true',
+        description: 'Id da oferta que deseja obter o lances cadastrados'
+      }
+    ],
     responses: {
       200: {
         description: 'Sucesso',
         content: {
           'application/json': {
             schema: {
-              $ref: '#/schemas/offersGetResponseBody'
+              $ref: '#/schemas/bidsGetResponseBody'
             }
           }
         }

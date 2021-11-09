@@ -7,12 +7,20 @@ export const customersSignUpPath = {
         'application/json': {
           schema: {
             $ref: '#/schemas/signUpRequestBody'
+          },
+          example: {
+            email: 'email@mail.com',
+            password: 'valid_password',
+            name: 'valid_name',
+            doc: '60.429.484/0001-10',
+            about: 'valid_about',
+            site: 'valid_site'
           }
         }
       }
     },
     responses: {
-      200: {
+      201: {
         description: 'Sucesso',
         content: {
           'application/json': {

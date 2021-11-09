@@ -15,6 +15,12 @@ import { offersPostRequestBodySchema } from './schemas/offers/offers-post-reques
 import { offersPostResponseBodySchema } from './schemas/offers/offers-post-response-body-schema'
 import { offersGetResponseBodySchema } from './schemas/offers/offers-get-response-body-schema'
 import { apiKeyAuthSchema } from './schemas/api-key-auth-schema'
+import { BidsPath } from './path/bids/bids-path'
+import { bidsPostRequestBodySchema } from './schemas/bids/bids-post-request-body-schema'
+import { accountsGetResponseBodySchema } from './schemas/accounts/account-get-response-body'
+import { customersPath } from './path/accounts/customers'
+import { providersPath } from './path/accounts/providers'
+import { bidsGetResponseBodySchema } from './schemas/bids/bids-get-response-body-schema'
 
 export default {
   openapi: '3.0.0',
@@ -41,7 +47,10 @@ export default {
     '/providers/signup': providersSignUpPath,
     '/customers/login': customersLoginPath,
     '/providers/login': providersLoginPath,
-    '/offers': OfferPath
+    '/offers': OfferPath,
+    '/bids': BidsPath,
+    '/customers': customersPath,
+    '/providers': providersPath
   },
   schemas: {
     error: errorSchema,
@@ -51,7 +60,11 @@ export default {
     signUpResponseBody: signUpRequestBodySchema,
     offersPostRequestBody: offersPostRequestBodySchema,
     offersPostResponseBody: offersPostResponseBodySchema,
-    offersGetResponseBody: offersGetResponseBodySchema
+    offersGetResponseBody: offersGetResponseBodySchema,
+    bidsPostRequestBody: bidsPostRequestBodySchema,
+    bidsPostResponseBody: bidsPostRequestBodySchema,
+    bidsGetResponseBody: bidsGetResponseBodySchema,
+    accountGetResponseBody: accountsGetResponseBodySchema
   },
   components: {
     securitySchemes: {
