@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id        Int      @id @default(autoincrement())
+  email     String   @db.VarChar(80) @unique
+  password  String   @db.VarChar(255)
+  name      String   @db.VarChar(80)
+  doc       String   @db.VarChar(25) @unique
+  about     String   @db.VarChar(255)
+  site      String   @db.VarChar(80)
+  active    Boolean  @default(true)
+  offers    Offer[]
+}
+
+model Provider {
+  id        Int      @id @default(autoincrement())
+  email     String   @db.VarChar(80) @unique
+  password  String   @db.VarChar(255)
+  name      String   @db.VarChar(80)
+  doc       String   @db.VarChar(25) @unique
+  about     String   @db.VarChar(255)
+  site      String   @db.VarChar(80)
+  active    Boolean  @default(true)
+  bids      Bid[]
+}
+
+model Offer {
+  customer        Customer    @relation(fields: [id_customer], references: [id])
+  id              Int         @id @default(autoincrement())
+  id_customer     Int 
+  from            String      @db.VarChar(80) 
+  to              String      @db.VarChar(80)
+  initial_value   Decimal     @db.Decimal(9, 2)
+  amount          Decimal     @db.Decimal(9, 2)
+  amount_type     AmountType   @default(KG)
+  bids            Bid[]
+}
+
+model Bid {
+  id              Int         @id @default(autoincrement())
+  provider        Provider    @relation(fields: [id_provider], references: [id])
+  offer           Offer       @relation(fields: [id_offer], references: [id])
+  id_provider     Int
+  id_offer        Int 
+  value           Decimal     @db.Decimal(9, 2)
+  amount          Decimal     @db.Decimal(9, 2)
+}
+
+enum AmountType {
+  KG
+  TON
+}

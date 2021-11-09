@@ -1,0 +1,67 @@
+{
+  "name": "teste-back-goflux",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "up": "docker-compose up -d",
+    "down": "docker-compose down",
+    "build": "rimraf dist && tsc",
+    "start": "node dist/main/server.js",
+    "deploy": "npm run up && npx prisma migrate deploy && npm run build && npm start && npm run down",
+    "dev": "dotenv -e .env sucrase-node src/main/server.ts",
+    "test": "npm run up:test && npm run migrate:testdb && npm run jest && npm run down:test",
+    "jest": "dotenv -e .env.test -- jest --passWithNoTests --runInBand",
+    "prepare": "husky install",
+    "migrate:testdb": "dotenv -e .env.test -- npx prisma migrate dev",
+    "up:test": "docker-compose -f docker-compose-test.yml up -d",
+    "down:test": "docker-compose -f docker-compose-test.yml down"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brunobrolesi/teste-back-goflux.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brunobrolesi/teste-back-goflux/issues"
+  },
+  "homepage": "https://github.com/brunobrolesi/teste-back-goflux#readme",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/express": "^4.17.13",
+    "@types/jest": "^27.0.2",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/node": "^16.11.6",
+    "@types/supertest": "^2.0.11",
+    "@types/swagger-ui-express": "^4.1.3",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "dotenv-cli": "^4.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard-with-typescript": "^21.0.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1",
+    "git-commit-msg-linter": "^3.2.8",
+    "husky": "^7.0.4",
+    "jest": "^27.3.1",
+    "jest-mock-extended": "^2.0.4",
+    "lint-staged": "^11.2.6",
+    "prisma": "^3.4.1",
+    "rimraf": "^3.0.2",
+    "sucrase": "^3.20.3",
+    "supertest": "^6.1.6",
+    "ts-jest": "^27.0.7",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "@prisma/client": "^3.4.1",
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.1",
+    "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
+    "swagger-ui-express": "^4.1.6"
+  }
+}

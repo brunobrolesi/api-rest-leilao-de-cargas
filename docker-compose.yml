@@ -1,0 +1,15 @@
+version: '3.3'
+
+services: 
+  db:
+    image: postgres:13.4
+    container_name: db
+    restart: always
+    tty: true
+    ports: 
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./.docker/dbdata:/var/lib/postgres
