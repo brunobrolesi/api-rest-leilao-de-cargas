@@ -79,7 +79,7 @@ describe('AddOffer Controller', () => {
     const { sut, addOfferBodyValidatorStub } = makeSut()
     jest.spyOn(addOfferBodyValidatorStub, 'isValid').mockReturnValueOnce({ error: new Error('any_message') })
     const response = await sut.handle(makeFakeHttpRequest())
-    expect(response.body.message).toBe('any_message')
+    expect(response.body.error).toBe('any_message')
   })
 
   it('Should call add offer with correct values', async () => {
@@ -101,7 +101,7 @@ describe('AddOffer Controller', () => {
     jest.spyOn(addOfferStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const response = await sut.handle(makeFakeHttpRequest())
     expect(response.statusCode).toBe(500)
-    expect(response.body).toEqual(new ServerError())
+    expect(response.body).toEqual({ error: new ServerError().message })
   })
 
   it('Should returns 201 and offer id if success', async () => {

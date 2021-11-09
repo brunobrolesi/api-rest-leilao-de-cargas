@@ -91,7 +91,7 @@ describe('Signup Controller', () => {
     jest.spyOn(signUpBodyValidatorStub, 'isValid').mockReturnValueOnce({ error: new Error('any_message') })
     const httpRequest = makeFakeHttpRequest()
     const response = await sut.handle(httpRequest)
-    expect(response.body.message).toBe('any_message')
+    expect(response.body.error).toBe('any_message')
   })
 
   it('Should call add account with correct values', async () => {
@@ -115,7 +115,7 @@ describe('Signup Controller', () => {
     const httpRequest = makeFakeHttpRequest()
     const response = await sut.handle(httpRequest)
     expect(response.statusCode).toBe(500)
-    expect(response.body).toEqual(new ServerError())
+    expect(response.body).toEqual({ error: new ServerError().message })
   })
 
   it('Should return 201 and an account on success', async () => {

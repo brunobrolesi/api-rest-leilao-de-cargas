@@ -3,6 +3,8 @@ import { AddAccountModel } from '../../../domain/usecases/add-account'
 import { DbAddAccount } from './db-add-account'
 import { AddAccountRepository } from '../../protocols/db/add-account-repository'
 import { Encrypter } from '../../protocols/criptography/encrypter'
+import { LoadAccountByEmailRepository } from '../../protocols/db/load-account-by-email-repository'
+import { LoadAccountByCnpjRepository } from '../../protocols/db/load-account-by-cnpj-repository'
 
 const makeEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {
@@ -41,6 +43,24 @@ const makeAddAccountRepository = (): AddAccountRepository => {
   return new AddAccountRepositoryStub()
 }
 
+const makeLoadAccountByEmailRepository = (): LoadAccountByEmailRepository => {
+  class LoadAccountByEmailRepositoryStub implements LoadAccountByEmailRepository {
+    async loadByEmail (email: string): Promise<AccountModel|null> {
+      return await new Promise(resolve => resolve(null))
+    }
+  }
+  return new LoadAccountByEmailRepositoryStub()
+}
+
+const makeLoadAccountByCnpjRepository = (): LoadAccountByCnpjRepository => {
+  class LoadAccountByCnpjRepositoryStub implements LoadAccountByCnpjRepository {
+    async loadByCnpj (cnpj: string): Promise<AccountModel|null> {
+      return await new Promise(resolve => resolve(null))
+    }
+  }
+  return new LoadAccountByCnpjRepositoryStub()
+}
+
 interface SutTypes {
   sut: DbAddAccount
   encrypterStub: Encrypter
@@ -50,7 +70,7 @@ interface SutTypes {
 const makeSut = (): SutTypes => {
   const encrypterStub = makeEncrypter()
   const addAccountRepositoryStub = makeAddAccountRepository()
-  const sut = new DbAddAccount(encrypterStub, addAccountRepositoryStub)
+  const sut = new DbAddAccount(encrypterStub, addAccountRepositoryStub, makeLoadAccountByEmailRepository(), makeLoadAccountByCnpjRepository())
 
   return {
     sut,

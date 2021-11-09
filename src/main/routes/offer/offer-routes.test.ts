@@ -79,7 +79,7 @@ describe('Offer Routes', () => {
         })
         .expect(403)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 403 when token is invalid', async () => {
@@ -95,7 +95,7 @@ describe('Offer Routes', () => {
         })
         .expect(403)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 401 when token belongs to an provider', async () => {
@@ -123,7 +123,7 @@ describe('Offer Routes', () => {
         })
         .expect(401)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 201 and offer id when token is valid', async () => {

@@ -91,7 +91,7 @@ describe('Bid Routes', () => {
         })
         .expect(403)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 403 when token is invalid', async () => {
@@ -105,7 +105,7 @@ describe('Bid Routes', () => {
         })
         .expect(403)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 401 when token belongs to an customer', async () => {
@@ -131,7 +131,7 @@ describe('Bid Routes', () => {
         })
         .expect(401)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 201 when token is valid', async () => {

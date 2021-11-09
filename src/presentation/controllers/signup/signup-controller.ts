@@ -20,6 +20,8 @@ export class SignUpController implements Controller {
 
       const account = await this.addAccount.add({ email, password, name, doc, about, site })
 
+      if (!account) return badRequest(new Error('Email or Cnpj already in use'))
+
       return created(account)
     } catch (error) {
       return serverError()

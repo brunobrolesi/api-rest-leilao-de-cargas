@@ -63,7 +63,7 @@ describe('AddBid Controller', () => {
     jest.spyOn(loadAllBidsStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const response = await sut.handle(makeHttpRequest())
     expect(response.statusCode).toBe(500)
-    expect(response.body).toEqual(new ServerError())
+    expect(response.body).toEqual({ error: new ServerError().message })
   })
 
   it('Should returns 200 and array of bids if success', async () => {

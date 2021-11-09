@@ -10,8 +10,8 @@ export const makeCustomerSignUpController = (): Controller => {
   const salt = 12
   const encrypter = new BcryptAdapter(salt)
   const prima = new PrismaClient()
-  const addAccountRepository = new AccountCustomerPostgresRepository(prima)
-  const addAccount = new DbAddAccount(encrypter, addAccountRepository)
+  const accountRepository = new AccountCustomerPostgresRepository(prima)
+  const addAccount = new DbAddAccount(encrypter, accountRepository, accountRepository, accountRepository)
   const signUpBodyValidator = new SignUpValidator()
   return new SignUpController(signUpBodyValidator, addAccount)
 }

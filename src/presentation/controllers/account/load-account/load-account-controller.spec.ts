@@ -54,7 +54,7 @@ describe('LoadAccount Controller', () => {
     jest.spyOn(loadAllAccountStub, 'load').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const response = await sut.handle({})
     expect(response.statusCode).toBe(500)
-    expect(response.body).toEqual(new ServerError())
+    expect(response.body).toEqual({ error: new ServerError().message })
   })
 
   it('Should returns 200 and array of providers if success', async () => {

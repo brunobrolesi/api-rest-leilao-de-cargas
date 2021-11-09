@@ -72,7 +72,7 @@ describe('Login Controller', () => {
     jest.spyOn(loginBodyValidatorStub, 'isValid').mockReturnValueOnce({ error: new Error('any_message') })
     const httpRequest = makeFakeHttpRequest()
     const response = await sut.handle(httpRequest)
-    expect(response.body.message).toBe('any_message')
+    expect(response.body.error).toBe('any_message')
   })
 
   it('Should call authentication with correct values', async () => {
@@ -97,7 +97,7 @@ describe('Login Controller', () => {
     const httpRequest = makeFakeHttpRequest()
     const response = await sut.handle(httpRequest)
     expect(response.statusCode).toBe(500)
-    expect(response.body).toEqual(new ServerError())
+    expect(response.body).toEqual({ error: new ServerError().message })
   })
 
   it('Should return 200 if valid credentials are provided', async () => {

@@ -25,7 +25,7 @@ describe('Login Routes', () => {
         })
         .expect(400)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 201 and an account on success', async () => {
@@ -60,7 +60,7 @@ describe('Login Routes', () => {
         })
         .expect(400)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 401 if credential are invalid ', async () => {
@@ -72,7 +72,7 @@ describe('Login Routes', () => {
         })
         .expect(401)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 200 and token if success', async () => {
@@ -112,7 +112,7 @@ describe('Login Routes', () => {
         })
         .expect(400)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 201 and an account on success', async () => {
@@ -147,7 +147,7 @@ describe('Login Routes', () => {
         })
         .expect(400)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 401 if credential are invalid ', async () => {
@@ -159,7 +159,7 @@ describe('Login Routes', () => {
         })
         .expect(401)
 
-      expect(response.body.message).toBeTruthy()
+      expect(response.body.error).toBeTruthy()
     })
 
     it('Should return 200 and token if success', async () => {

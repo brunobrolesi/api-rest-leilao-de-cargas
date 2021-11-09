@@ -75,7 +75,7 @@ describe('AddBid Controller', () => {
     const { sut, addBidBodyValidatorStub } = makeSut()
     jest.spyOn(addBidBodyValidatorStub, 'isValid').mockReturnValueOnce({ error: new Error('any_message') })
     const response = await sut.handle(makeFakeHttpRequest())
-    expect(response.body.message).toBe('any_message')
+    expect(response.body.error).toBe('any_message')
   })
 
   it('Should call add bid with correct values', async () => {
@@ -95,7 +95,7 @@ describe('AddBid Controller', () => {
     jest.spyOn(addBidStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const response = await sut.handle(makeFakeHttpRequest())
     expect(response.statusCode).toBe(500)
-    expect(response.body).toEqual(new ServerError())
+    expect(response.body).toEqual({ error: new ServerError().message })
   })
 
   it('Should returns 201 if success', async () => {
