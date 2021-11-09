@@ -43,3 +43,4 @@ As seguintes ferramentas foram usadas na construção do projeto:
 - [TypeScript](https://www.typescriptlang.org/)
 - [Prisma](https://www.prisma.io/)
 - [Jest](https://jestjs.io/pt-BR/)
+- [Swagger](https://swagger.io/docs/specification/about/)
