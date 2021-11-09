@@ -44,14 +44,13 @@ model Offer {
 }
 
 model Bid {
+  id              Int         @id @default(autoincrement())
   provider        Provider    @relation(fields: [id_provider], references: [id])
   offer           Offer       @relation(fields: [id_offer], references: [id])
   id_provider     Int
   id_offer        Int 
   value           Decimal     @db.Decimal(9, 2)
   amount          Decimal     @db.Decimal(9, 2)
-
-  @@id([id_provider, id_offer])
 }
 
 enum AmountType {
