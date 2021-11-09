@@ -3,6 +3,9 @@ export const bidsGetResponseBodySchema = {
   items: {
     type: 'object',
     properties: {
+      id: {
+        type: 'integer'
+      },
       id_provider: {
         type: 'integer'
       },

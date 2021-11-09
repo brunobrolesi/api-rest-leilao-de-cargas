@@ -10,6 +10,6 @@ const router = Router()
 const customerAuth = adaptMiddleware(makeAuthMiddleware('provider'))
 
 router.post('/bids', customerAuth, adaptRoute(makeAddBidController()))
-router.post('/bids/:id', adaptRoute(makeLoadBidsController()))
+router.get('/bids/:id', adaptRoute(makeLoadBidsController()))
 
 export default router

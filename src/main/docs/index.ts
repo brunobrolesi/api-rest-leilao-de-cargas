@@ -22,6 +22,7 @@ import { customersPath } from './path/accounts/customers'
 import { providersPath } from './path/accounts/providers'
 import { bidsGetResponseBodySchema } from './schemas/bids/bids-get-response-body-schema'
 import { signUpResponseBodySchema } from './schemas/login/signup-response-body-shema'
+import { BidsInOfferPath } from './path/bids/bids-in-offer-path'
 
 export default {
   openapi: '3.0.0',
@@ -50,6 +51,7 @@ export default {
     '/providers/login': providersLoginPath,
     '/offers': OfferPath,
     '/bids': BidsPath,
+    '/bids/{offerId}': BidsInOfferPath,
     '/customers': customersPath,
     '/providers': providersPath
   },
