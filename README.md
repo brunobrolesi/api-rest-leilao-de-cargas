@@ -31,8 +31,9 @@ $ npm test
 # Rode o projeto
 $ npm run deploy
 
-# O servidor inciará por padrão porta:3000 - acesse <http://localhost:3000/api-docs> para consumir a documentação
+# O servidor inciará por padrão porta:3000
 ```
+**Acesse <http://localhost:3000/api-docs> para consumir a documentação**
 
 ### 🛠 Tecnologias
 
