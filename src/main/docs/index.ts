@@ -10,6 +10,11 @@ import { providersLoginPath } from './path/login/providers-login-path'
 import { signUpRequestBodySchema } from './schemas/login/signup-request-body-shema'
 import { customersSignUpPath } from './path/login/customers-signup-path'
 import { providersSignUpPath } from './path/login/providers-signup-path'
+import { OfferPath } from './path/offers/offers-path'
+import { offersPostRequestBodySchema } from './schemas/offers/offers-post-request-body-schema'
+import { offersPostResponseBodySchema } from './schemas/offers/offers-post-response-body-schema'
+import { offersGetResponseBodySchema } from './schemas/offers/offers-get-response-body-schema'
+import { apiKeyAuthSchema } from './schemas/api-key-auth-schema'
 
 export default {
   openapi: '3.0.0',
@@ -23,21 +28,35 @@ export default {
   }],
   tag: [{
     name: 'Login'
+  }, {
+    name: 'Offers'
+  }, {
+    name: 'Bids'
+  },
+  {
+    name: 'Accounts'
   }],
   paths: {
     '/customers/signup': customersSignUpPath,
     '/providers/signup': providersSignUpPath,
     '/customers/login': customersLoginPath,
-    '/providers/login': providersLoginPath
+    '/providers/login': providersLoginPath,
+    '/offers': OfferPath
   },
   schemas: {
     error: errorSchema,
     loginResponseBody: loginResponseBodySchema,
     loginRequestBody: loginRequestBodySchema,
     signUpRequestBody: signUpRequestBodySchema,
-    signUpResponseBody: signUpRequestBodySchema
+    signUpResponseBody: signUpRequestBodySchema,
+    offersPostRequestBody: offersPostRequestBodySchema,
+    offersPostResponseBody: offersPostResponseBodySchema,
+    offersGetResponseBody: offersGetResponseBodySchema
   },
   components: {
+    securitySchemes: {
+      apiKeyAuth: apiKeyAuthSchema
+    },
     badRequest: badRequest,
     forbidden: forbidden,
     serverError: serverError,
