@@ -34,6 +34,7 @@ const makeAddBidRepository = (): AddBidRepository => {
   class AddBidRepositoryStub implements AddBidRepository {
     async add (bidData: AddBidModel): Promise<BidModel> {
       const fakeBid = {
+        id: 1,
         id_provider: 1,
         id_offer: 2,
         value: 100,
@@ -105,6 +106,6 @@ describe('DbAddBid', () => {
   it('Should return bid id on success', async () => {
     const { sut } = makeSut()
     const result = await sut.add(makeFakeBidData())
-    expect(result).toBeUndefined()
+    expect(result).toEqual({ id: 1 })
   })
 })

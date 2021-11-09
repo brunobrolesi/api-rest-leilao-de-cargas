@@ -1,4 +1,4 @@
-import { AddBid, AddBidModel } from '../../../../domain/usecases/add-bid'
+import { AddBid, AddBidModel, BidId } from '../../../../domain/usecases/add-bid'
 import { ServerError } from '../../../errors/server-error'
 import { BodyValidator } from '../../../protocols/body-validator'
 import { ValidatorResult } from '../../../protocols/validator-result'
@@ -16,8 +16,8 @@ const makeAddBidBodyValidatorStub = (): BodyValidator => {
 
 const makeAddBidStub = (): AddBid => {
   class AddBidStub implements AddBid {
-    async add (data: AddBidModel): Promise<void> {
-      return await new Promise(resolve => resolve())
+    async add (data: AddBidModel): Promise<BidId> {
+      return await new Promise(resolve => resolve({ id: 1 }))
     }
   }
 
@@ -102,6 +102,6 @@ describe('AddBid Controller', () => {
     const { sut } = makeSut()
     const response = await sut.handle(makeFakeHttpRequest())
     expect(response.statusCode).toBe(201)
-    expect(response.body).toBeNull()
+    expect(response.body).toEqual({ id: 1 })
   })
 })

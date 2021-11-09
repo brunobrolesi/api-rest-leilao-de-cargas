@@ -23,14 +23,14 @@ export class AddBidController implements Controller {
         amount
       } = body
 
-      await this.addBid.add({
+      const bidId = await this.addBid.add({
         id_provider,
         id_offer,
         value,
         amount
       })
 
-      return created(null)
+      return created(bidId)
     } catch (error) {
       return serverError()
     }

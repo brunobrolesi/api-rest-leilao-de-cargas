@@ -5,6 +5,10 @@ export interface AddBidModel {
   amount: number
 }
 
+export interface BidId {
+  id: number
+}
+
 export interface AddBid {
-  add: (data: AddBidModel) => Promise<void>
+  add: (data: AddBidModel) => Promise<BidId>
 }

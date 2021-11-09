@@ -17,6 +17,7 @@ const makeFakeBid = (): AddBidModel => ({
 })
 
 const makeFakeBidModel = (): BidModel => ({
+  id: 1,
   id_provider: 1,
   id_offer: 2,
   value: 100,

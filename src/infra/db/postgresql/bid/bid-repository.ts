@@ -12,8 +12,8 @@ export class BidPostgresRepository implements AddBidRepository, LoadAllBidsByOff
     const decimal_value = new Prisma.Decimal(value)
     const decimal_amount = new Prisma.Decimal(amount)
     const bidWithDecimalValues = Object.assign({}, bidData, { value: decimal_value, amount: decimal_amount })
-    await this.prisma.bid.create({ data: bidWithDecimalValues })
-    return bidData
+    const bid = await this.prisma.bid.create({ data: bidWithDecimalValues })
+    return bid as unknown as BidModel
   }
 
   async loadAllByOfferId (offerId: number): Promise<BidModel[]|[]> {

@@ -6,12 +6,14 @@ import { LoadBidsController } from './load-bids-controller'
 
 const makeBids = (): BidModel[] => ([
   {
+    id: 1,
     id_provider: 1,
     id_offer: 2,
     value: 100,
     amount: 100
   },
   {
+    id: 2,
     id_provider: 3,
     id_offer: 2,
     value: 100,
