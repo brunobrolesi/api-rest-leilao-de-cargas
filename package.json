@@ -7,8 +7,6 @@
     "start": "dotenv -e .env sucrase-node src/main/server.ts",
     "test": "npm run docker:up && npm run migrate:testdb && npm run jest && npm run docker:down",
     "jest": "dotenv -e .env.test -- jest --passWithNoTests --runInBand",
-    "test:unit": "npm run jest -- --watch -c jest-unit-config.js",
-    "test:integration": "npm run docker:up && npm run migrate:testdb && npm run jest -- --watch -c jest-integration-config.js && npm run docker:down",
     "test:staged": "",
     "prepare": "husky install",
     "migrate:testdb": "dotenv -e .env.test -- npx prisma migrate dev --name postgres-init",
