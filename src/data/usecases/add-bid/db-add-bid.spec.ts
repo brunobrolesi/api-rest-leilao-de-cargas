@@ -72,14 +72,14 @@ describe('DbAddBid', () => {
     await expect(promise).rejects.toThrow()
   })
 
-  it('Should throw if LoadOfferByIdRepository returns null', async () => {
+  it('Should return null LoadOfferByIdRepository returns null', async () => {
     const { sut, loadOfferByIdRepositoryStub } = makeSut()
     jest.spyOn(loadOfferByIdRepositoryStub, 'loadById').mockReturnValueOnce(new Promise(resolve => resolve(null)))
-    const promise = sut.add(makeFakeBidData())
-    await expect(promise).rejects.toThrow()
+    const result = await sut.add(makeFakeBidData())
+    expect(result).toBeNull()
   })
 
-  it('Should throw if offer amount is less then bid amount', async () => {
+  it('Should return null if offer amount is less then bid amount', async () => {
     const { sut, loadOfferByIdRepositoryStub } = makeSut()
     jest.spyOn(loadOfferByIdRepositoryStub, 'loadById').mockReturnValueOnce(new Promise(resolve => resolve(
       {
@@ -92,8 +92,8 @@ describe('DbAddBid', () => {
         amount_type: 'any_type'
       }
     )))
-    const promise = sut.add(makeFakeBidData())
-    await expect(promise).rejects.toThrow()
+    const result = await sut.add(makeFakeBidData())
+    await expect(result).toBeNull()
   })
 
   it('Should throw if AddBidRepository throws', async () => {
