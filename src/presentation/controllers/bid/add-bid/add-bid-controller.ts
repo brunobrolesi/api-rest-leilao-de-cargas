@@ -30,6 +30,8 @@ export class AddBidController implements Controller {
         amount
       })
 
+      if (!bidId) return badRequest(new Error('Invalid offer id or amount'))
+
       return created(bidId)
     } catch (error) {
       return serverError()
