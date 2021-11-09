@@ -10,7 +10,7 @@ Antes de começar, você vai precisar ter instalado em sua máquina as seguintes
 - [Docker](https://docs.docker.com/desktop/windows/install/)
 - [Docker-Compose](https://docs.docker.com/desktop/windows/install/)
 
-### 🎲 Comandos Iniciais
+### 🎲 Comandos Para Iniciar Aplicação
 
 ```bash
 # Clone este repositório
