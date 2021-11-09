@@ -8,12 +8,12 @@ export class DbAddBid implements AddBid {
     private readonly addBidRepository: AddBidRepository
   ) {}
 
-  async add (bidData: AddBidModel): Promise<BidId> {
+  async add (bidData: AddBidModel): Promise<BidId|null> {
     const offer = await this.loadOfferByIdRepository.loadById(bidData.id_offer)
 
-    if (!offer) throw new Error('Invalid Offer Id')
+    if (!offer) return null
 
-    if (offer.amount < bidData.amount) throw new Error('Invalid amount value')
+    if (offer.amount < bidData.amount) return null
 
     const { id } = await this.addBidRepository.add(bidData)
 

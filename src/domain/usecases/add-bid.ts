@@ -10,5 +10,5 @@ export interface BidId {
 }
 
 export interface AddBid {
-  add: (data: AddBidModel) => Promise<BidId>
+  add: (data: AddBidModel) => Promise<BidId|null>
 }
